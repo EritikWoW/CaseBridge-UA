@@ -38,6 +38,23 @@ Then open `http://localhost:8080`.
 
 Vanilla HTML, CSS, and JavaScript. No build step, account, API key, or backend is required for the prototype.
 
+## Edition 02
+
+- Redesigned civic workspace with progress transitions, a drawn completion check, and subtle pointer-responsive demo cards. Reduced-motion settings are respected.
+- Three explicitly fictional, bilingual cases: a rental deposit, paused IDP payments, and unpaid wages. Each includes context and selected materials.
+- Topic-specific consultation preparation, deadline awareness, a materials summary, editable intake, copy, local text download, and print/PDF support.
+- Complete region selector, reversible UA/EN interface, keyboard focus management, and confirmation before replacing an intake.
+- No account, analytics, remote AI, persistent case storage, or automatic submission. Exports are user-initiated and may contain whatever the user entered.
+- Cases and topic guidance are demonstration templates, not expert-reviewed legal playbooks. Contact details should be confirmed with the official source.
+
+### Checks
+
+```bash
+node --test tests/prototype.test.cjs
+```
+
+These checks cover demo-data integrity, input validation, source references, privacy-related API use, syntax, and accessibility-related CSS guards. They are not a substitute for browser, screen-reader, or legal-content review.
+
 ## License
 
 MIT

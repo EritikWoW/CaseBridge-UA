@@ -1,7 +1,7 @@
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
-const state = { step: 1, topic: "", lang: "uk" };
+const state = { step: 1, topic: "", lang: "uk", demo: null };
 const form = $("#caseForm");
 const story = $("#story");
 const nextButton = $("#nextButton");
@@ -73,35 +73,54 @@ function applyLanguage() {
     if (translations[state.lang][key]) el.placeholder = translations[state.lang][key];
   });
   $("#langSwitch").innerHTML = state.lang === "uk" ? "<b>UA</b><span>EN</span>" : "<span>UA</span><b>EN</b>";
+  $("#langSwitch").setAttribute('aria-label', state.lang === 'uk' ? 'Switch to English' : 'Перемкнути на українську');
+  document.title = state.lang === 'uk' ? 'CaseBridge UA — ваш наступний крок' : 'CaseBridge UA — your next step';
+  renderRegions();
+  renderDemos();
+  refreshActionLabel();
   updateProgress();
   if (state.step === 4) buildResult();
 }
 
 function updateProgress() {
+  $('#journeyProgress').value = state.step;
   $("#progressLabel").textContent = state.lang === "uk" ? `Крок ${state.step} із 4` : `Step ${state.step} of 4`;
   $$('[data-step-nav]').forEach(item => {
     const n = Number(item.dataset.stepNav);
     item.classList.toggle("active", n === state.step);
     item.classList.toggle("done", n < state.step);
+    if (n === state.step) item.setAttribute('aria-current','step');
+    else item.removeAttribute('aria-current');
   });
 }
 
-function showStep(step) {
+function refreshActionLabel() {
+  const labels = state.lang === 'uk' ? ['Далі: контекст','Далі: докази','Побудувати маршрут'] : ['Next: context','Next: evidence','Build my route'];
+  $("[data-i18n='buildRoute']").textContent = labels[Math.min(state.step-1,2)];
+}
+
+function showStep(step, focus = true) {
   state.step = Math.min(4, Math.max(1, step));
   $$('[data-step]').forEach(el => el.classList.toggle("active", Number(el.dataset.step) === state.step));
   backButton.hidden = state.step === 1 || state.step === 4;
   nextButton.hidden = state.step === 4;
   restartButton.hidden = state.step !== 4;
   $("#emergencyBanner").hidden = !(state.step >= 2 && $("#danger").checked);
-  const labels = state.lang === "uk" ? ["Далі: контекст", "Далі: докази", "Побудувати маршрут"] : ["Next: context", "Next: evidence", "Build my route"];
-  $("[data-i18n='buildRoute']").textContent = labels[Math.min(state.step - 1, 2)];
+  $('#demoResult').hidden = state.step === 4;
+  refreshActionLabel();
   updateProgress();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (focus) {
+    const heading = $('.form-step.active h1');
+    heading.setAttribute('tabindex','-1');
+    heading.focus({preventScroll:true});
+    heading.scrollIntoView({block:'nearest',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto':'smooth'});
+  }
 }
 
 function validateStep() {
   if (state.step === 1 && story.value.trim().length < 20) {
     story.classList.add("invalid");
+    story.setAttribute('aria-invalid','true');
     $("#storyError").hidden = false;
     story.focus();
     return false;
@@ -117,29 +136,43 @@ function buildResult() {
   $("#resultTitle").textContent = isUrgent ? copy.urgent : copy.defaultTitle;
   $("#resultSummary").textContent = isUrgent ? copy.urgentSummary : copy.summary;
   $("#urgencyBadge").textContent = isUrgent ? copy.urgentBadge : copy.recommended;
-  $("#actionList").innerHTML = (isUrgent ? copy.urgentActions : copy.actions).map(item => `<li>${escapeHtml(item)}</li>`).join("");
+  const deadlineValue = $('#deadline').value;
+  $('#urgencyBadge').classList.toggle('urgent',isUrgent || deadlineValue === 'today');
+  const topic = state.topic || 'other';
+  const actions = [...(isUrgent ? copy.urgentActions : copy.actions)];
+  if (!isUrgent) {
+    actions[1] = CaseData.topicNotes[topic][state.lang === 'uk' ? 0:1];
+    if (deadlineValue === 'today' || deadlineValue === 'week') {
+      actions[0] += state.lang === 'uk' ? ' Повідомте про зазначений вами близький строк; юридичний строк має уточнити фахівець.' : ' Mention your stated near-term deadline; a professional must confirm any legal time limit.';
+      $('#urgencyBadge').textContent = state.lang === 'uk' ? 'Близький строк' : 'Near-term deadline';
+    }
+  }
+  $("#actionList").innerHTML = actions.map(item => `<li>${escapeHtml(item)}</li>`).join("");
 
   const statuses = selectedValues("status");
   const evidence = selectedValues("evidence");
-  const region = $("#region").value || (state.lang === "uk" ? "не вказано" : "not specified");
+  const region = $("#region").value ? $('#region').selectedOptions[0].textContent : (state.lang === "uk" ? "не вказано" : "not specified");
   const deadline = $("#deadline").selectedOptions[0].textContent;
-  const statusText = statuses.length ? statuses.join(", ") : (state.lang === "uk" ? "не вказано" : "not specified");
-  const evidenceText = evidence.length ? evidence.join(", ") : (state.lang === "uk" ? "поки немає" : "none yet");
+  const statusText = statuses.length ? statuses.map(t).join(", ") : (state.lang === "uk" ? "не вказано" : "not specified");
+  const evidenceText = evidence.length ? evidence.map(k => t(CaseData.materialKeys[k])).join(", ") : (state.lang === "uk" ? "поки немає" : "none yet");
   const draft = `${copy.draftHead}\n\n${copy.draftIntro}\n${story.value.trim()}\n\n${copy.draftContext}\n— ${state.lang === "uk" ? "Місце" : "Location"}: ${region}\n— ${state.lang === "uk" ? "Строк" : "Deadline"}: ${deadline}\n— ${state.lang === "uk" ? "Статус" : "Status"}: ${statusText}\n\n${copy.draftEvidence} ${evidenceText}.\n\n${copy.draftEnd}`;
   $("#draftText").textContent = draft;
+  $('#resultMetadata').replaceChildren(...[t(topic), region, deadline, ...(state.demo ? [t('fictional')]:[])].map(value => {const el=document.createElement('span');el.textContent=value;return el;}));
+  $('#evidenceCount').textContent = state.lang === 'uk' ? `${evidence.length} із 4 позначено` : `${evidence.length} of 4 checked`;
+  $('#preparationList').innerHTML = Object.entries(CaseData.materialKeys).map(([key,label]) => `<div class="preparation-item ${evidence.includes(key) ? 'ready':''}"><span aria-hidden="true">${evidence.includes(key) ? '✓':'–'}</span><div>${escapeHtml(t(label))}<small>${escapeHtml(t(evidence.includes(key) ? 'materialReady':'materialMissing'))}</small></div></div>`).join('');
 }
 
 function escapeHtml(value) { const el = document.createElement("div"); el.textContent = value; return el.innerHTML; }
 
 story.addEventListener("input", () => {
   $("#charCount").textContent = `${story.value.length} / 1200`;
-  if (story.value.trim().length >= 20) { story.classList.remove("invalid"); $("#storyError").hidden = true; }
+  if (story.value.trim().length >= 20) { story.classList.remove("invalid"); story.removeAttribute('aria-invalid'); $("#storyError").hidden = true; }
 });
 
 $$('.topic-chip').forEach(button => button.addEventListener("click", () => {
   state.topic = button.dataset.topic;
-  $$('.topic-chip').forEach(el => el.classList.toggle("selected", el === button));
-  story.value = topicSamples[state.lang][state.topic];
+  $$('.topic-chip').forEach(el => {el.classList.toggle("selected", el === button);el.setAttribute('aria-pressed',String(el === button));});
+  if (!story.value.trim()) story.value = topicSamples[state.lang][state.topic];
   story.dispatchEvent(new Event("input"));
   story.focus();
 }));
@@ -153,19 +186,89 @@ form.addEventListener("submit", event => {
 
 backButton.addEventListener("click", () => showStep(state.step - 1));
 $("#danger").addEventListener("change", () => { $("#emergencyBanner").hidden = !$("#danger").checked; });
-$("#langSwitch").addEventListener("click", () => { state.lang = state.lang === "uk" ? "en" : "uk"; applyLanguage(); });
+$("#langSwitch").addEventListener("click", () => {
+  const previous=state.lang;
+  state.lang=previous==='uk'?'en':'uk';
+  const demo=CaseData.demos.find(d=>d.id===state.demo);
+  // Translate only untouched fictional text; never replace the user's own wording.
+  if(demo && story.value===demo[previous].story) {story.value=demo[state.lang].story;story.dispatchEvent(new Event('input'));}
+  applyLanguage();
+});
 restartButton.addEventListener("click", () => {
-  form.reset(); state.topic = ""; story.value = ""; story.dispatchEvent(new Event("input")); $$('.topic-chip').forEach(el => el.classList.remove("selected")); showStep(1);
+  confirmReplacement(() => {resetIntake(); showStep(1);});
 });
 $("#copyDraft").addEventListener("click", async () => {
   try { await navigator.clipboard.writeText($("#draftText").textContent); showToast(state.lang === "uk" ? "Чернетку скопійовано" : "Draft copied"); }
   catch { showToast(state.lang === "uk" ? "Виділіть текст і скопіюйте вручну" : "Select and copy the text manually"); }
 });
 
-function showToast(message) { const toast = $("#toast"); toast.textContent = message; toast.classList.add("show"); setTimeout(() => toast.classList.remove("show"), 2200); }
+let toastTimer;
+function showToast(message) { const toast = $("#toast"); clearTimeout(toastTimer); toast.textContent = message; toast.classList.add("show"); toastTimer = setTimeout(() => toast.classList.remove("show"), 3200); }
+
+function t(key) { return translations[state.lang][key] || translations.uk[key] || key; }
+Object.assign(translations.en, {
+  skip:'Skip to intake', demoToggle:'Demo cases', sidebarTitle:'From a situation — to your next step.', sidebarText:'Understand. Prepare. Reach out.',
+  workspaceLabel:'YOUR PERSONAL NAVIGATOR', modeLabel:'Prototype · no AI', demoEyebrow:'Try it without personal data', demoHeading:'Three situations. One clear start.', fictional:'Fictional examples',
+  demoResult:'Jump to the result ↗', topicHint:'The topic guides preparation only. Your text is not analysed by AI.', editCase:'Edit answers', download:'Download .txt', print:'Print / PDF',
+  prepareTitle:'Before speaking to a lawyer', prepareHint:'A preparation checklist, not a list of mandatory documents.', howRoute:'How was this route prepared?',
+  howRouteText:'This template uses the chosen topic, stated deadline, safety flag, and available materials. It is not AI analysis or an eligibility check. Confirm contact details on the official website before reaching out.',
+  replaceTitle:'Replace your current answers?', replaceText:'This clears the text and selected materials. They are not saved on a server.', cancel:'Keep answers', replace:'Replace',
+  materialReady:'You marked this as available', materialMissing:'Not marked — ask whether it is needed', demoLoaded:'Fictional example loaded', downloadReady:'Text file prepared',
+  verified:'Official support contacts'
+});
+// Capture original Ukrainian strings once so UA → EN → UA is fully reversible.
+$$('[data-i18n]').forEach(el => { translations.uk[el.dataset.i18n] = el.textContent; });
+$$('[data-i18n-placeholder]').forEach(el => { translations.uk[el.dataset.i18nPlaceholder] = el.placeholder; });
+Object.assign(translations.uk,{ materialReady:'Позначено як наявне',materialMissing:'Не позначено — уточніть, чи потрібно',demoLoaded:'Вигаданий приклад завантажено',downloadReady:'Текстовий файл підготовлено',verified:'Офіційні контакти допомоги' });
+
+const regions = [
+ ['Вінницька','Vinnytsia'],['Волинська','Volyn'],['Дніпропетровська','Dnipropetrovsk'],['Донецька','Donetsk'],['Житомирська','Zhytomyr'],['Закарпатська','Zakarpattia'],['Запорізька','Zaporizhzhia'],['Івано-Франківська','Ivano-Frankivsk'],['Київська','Kyiv region'],['Кіровоградська','Kirovohrad'],['Луганська','Luhansk'],['Львівська','Lviv'],['Миколаївська','Mykolaiv'],['Одеська','Odesa'],['Полтавська','Poltava'],['Рівненська','Rivne'],['Сумська','Sumy'],['Тернопільська','Ternopil'],['Харківська','Kharkiv'],['Херсонська','Kherson'],['Хмельницька','Khmelnytskyi'],['Черкаська','Cherkasy'],['Чернівецька','Chernivtsi'],['Чернігівська','Chernihiv'],['м. Київ','Kyiv city'],['АР Крим','Autonomous Republic of Crimea'],['м. Севастополь','Sevastopol'],['За кордоном','Outside Ukraine']
+];
+function renderRegions() {
+  const el=$('#region'), value=el.value;
+  el.replaceChildren(new Option(t('chooseRegion'),''),...regions.map(([uk,en]) => new Option(state.lang==='uk'?uk:en,uk)));
+  el.value=value;
+}
+function renderDemos() {
+  $('#demoCards').innerHTML=CaseData.demos.map(d => `<button type="button" class="demo-card" data-demo="${d.id}" aria-pressed="${state.demo===d.id}"><span class="case-number">${d.initials}</span><b>${escapeHtml(d[state.lang].title)}</b><small>${escapeHtml(d[state.lang].subtitle)}</small><span class="case-bottom">${escapeHtml(d[state.lang].detail)}<svg aria-hidden="true"><use href="#i-arrow"/></svg></span></button>`).join('');
+  $('#activeDemo').hidden=!state.demo;
+  if (state.demo) $('#activeDemoLabel').textContent=`${t('fictional')} · ${CaseData.demos.find(d=>d.id===state.demo)[state.lang].title}`;
+}
+function resetIntake() {
+  form.reset(); state.topic=''; state.demo=null; story.value=''; story.classList.remove('invalid'); story.removeAttribute('aria-invalid'); $('#storyError').hidden=true;
+  $$('.topic-chip').forEach(el=>{el.classList.remove('selected');el.setAttribute('aria-pressed','false');});
+  story.dispatchEvent(new Event('input')); renderDemos();
+}
+let pendingReplacement=null;
+function confirmReplacement(action) {
+  if (!story.value.trim() && !selectedValues('status').length && !selectedValues('evidence').length && !$('#region').value && $('#deadline').value==='none' && !$('#danger').checked) { action(); return; }
+  pendingReplacement=action; $('#replaceDialog').showModal();
+}
+$('#cancelReplace').addEventListener('click',()=>{pendingReplacement=null;$('#replaceDialog').close();});
+$('#replaceDialog').addEventListener('cancel',()=>{pendingReplacement=null;});
+$('#confirmReplace').addEventListener('click',()=>{const action=pendingReplacement;pendingReplacement=null;$('#replaceDialog').close();action?.();});
+function loadDemo(id) {
+  const demo=CaseData.demos.find(d=>d.id===id); if(!demo) return;
+  resetIntake(); state.demo=id; state.topic=demo.topic; story.value=demo[state.lang].story; $('#region').value=demo.region; $('#deadline').value=demo.deadline;
+  $$('input[name=status]').forEach(el=>el.checked=demo.statuses.includes(el.value));
+  $$('input[name=evidence]').forEach(el=>el.checked=demo.evidence.includes(el.value));
+  $$('.topic-chip').forEach(el=>{const active=el.dataset.topic===demo.topic;el.classList.toggle('selected',active);el.setAttribute('aria-pressed',String(active));});
+  story.dispatchEvent(new Event('input'));renderDemos();showStep(1);showToast(t('demoLoaded'));
+}
+$('#demoCards').addEventListener('click',event=>{const card=event.target.closest('[data-demo]');if(card) confirmReplacement(()=>loadDemo(card.dataset.demo));});
+$('#demoCards').addEventListener('pointermove',event=>{if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const card=event.target.closest('[data-demo]');if(!card)return;const rect=card.getBoundingClientRect();card.style.setProperty('--pointer-x',`${event.clientX-rect.left}px`);card.style.setProperty('--pointer-y',`${event.clientY-rect.top}px`);});
+$('#demoToggle').addEventListener('click',()=>{const gallery=$('#demoGallery');gallery.hidden=!gallery.hidden;$('#demoToggle').setAttribute('aria-expanded',String(!gallery.hidden));});
+$('#demoResult').addEventListener('click',()=>{if(story.value.trim().length<20){showStep(1);validateStep();return;}buildResult();showStep(4);});
+$('#editCase').addEventListener('click',()=>showStep(1));
+$('#printCase').addEventListener('click',()=>window.print());
+$('#downloadCase').addEventListener('click',()=>{
+  const text=['CaseBridge UA',state.demo?t('fictional'):'',$('#resultTitle').textContent,...$$('#actionList li').map((el,i)=>`${i+1}. ${el.textContent}`),'',...$$('#preparationList .preparation-item').map(el=>el.textContent),'https://legalaid.gov.ua/','',$('#draftText').textContent,'',t('disclaimer')].join('\n');
+  const url=URL.createObjectURL(new Blob(['\uFEFF',text],{type:'text/plain;charset=utf-8'}));
+  const a=document.createElement('a');a.href=url;a.download=`casebridge-${state.demo || 'request'}.txt`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);showToast(t('downloadReady'));
+});
 
 applyLanguage();
-showStep(1);
+showStep(1,false);
 
 // WebMCP: expose the same primary route-building journey to supporting agents.
 function registerModelTools() {
@@ -189,16 +292,10 @@ function registerModelTools() {
     },
     annotations: { readOnlyHint: false, untrustedContentHint: true },
     execute(input) {
-      if (!input || typeof input.situation !== "string" || input.situation.trim().length < 20 || input.situation.length > 1200) {
-        throw new Error("situation must contain 20–1200 characters");
-      }
-      story.value = input.situation.trim();
-      state.topic = input.topic || "other";
-      $("#danger").checked = Boolean(input.danger);
-      if (input.region) {
-        const option = $$("#region option").find(item => item.textContent === input.region);
-        if (option) $("#region").value = option.value;
-      }
+      const checked=CaseData.validateIntake(input);
+      if(checked.region && !regions.some(([uk])=>uk===checked.region)) throw new Error('Unknown region');
+      if(story.value.trim()) throw new Error('An intake is already in progress; clear it in the interface before replacing it.');
+      resetIntake();story.value=checked.situation;state.topic=checked.topic;$('#danger').checked=checked.danger;$('#region').value=checked.region;
       story.dispatchEvent(new Event("input"));
       buildResult();
       showStep(4);
@@ -206,6 +303,7 @@ function registerModelTools() {
     }
   };
   try { void Promise.resolve(context.registerTool(tool, { signal: lifecycle.signal })).catch(() => {}); } catch {}
+  window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});
 }
 
 registerModelTools();
