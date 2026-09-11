@@ -260,6 +260,13 @@
       "status": "pending_review"
     }
   ],
-  "changes": [],
-  "updated_at": "2026-09-11T00:57:48.024314+00:00"
+  "changes": [
+    {
+      "source_id": "bpd",
+      "observed_at": "2026-09-11T11:33:11.706947+00:00",
+      "fingerprint": "a348888d7fbd209875f18c772a12700d839a70d896b80cacb10da5de191846b3",
+      "status": "pending_review"
+    }
+  ],
+  "updated_at": "2026-09-11T11:33:11.706947+00:00"
 }
