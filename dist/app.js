@@ -75,11 +75,45 @@ function applyLanguage() {
   $("#langSwitch").innerHTML = state.lang === "uk" ? "<b>UA</b><span>EN</span>" : "<span>UA</span><b>EN</b>";
   $("#langSwitch").setAttribute('aria-label', state.lang === 'uk' ? 'Switch to English' : 'Перемкнути на українську');
   document.title = state.lang === 'uk' ? 'CaseBridge UA — ваш наступний крок' : 'CaseBridge UA — your next step';
+  updateThemeLabel();
   renderRegions();
   renderDemos();
   refreshActionLabel();
   updateProgress();
   if (state.step === 4) buildResult();
+}
+
+function updateThemeLabel() {
+  const night = Boolean(document.body?.classList?.contains('night'));
+  const label = $('#themeLabel');
+  const button = $('#themeToggle');
+  if (!label || !button) return;
+  label.textContent = night
+    ? (state.lang === 'uk' ? 'Денний режим' : 'Day mode')
+    : (state.lang === 'uk' ? 'Нічний режим' : 'Night mode');
+  button.setAttribute('aria-pressed', String(night));
+  button.setAttribute('aria-label', label.textContent);
+  $('.theme-icon').textContent = night ? '☾' : '☼';
+}
+
+function startAmbientSky() {
+  if (window.__ambientSkyStarted) return;
+  window.__ambientSkyStarted = true;
+  const canvas = $('#ambientCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dots = Array.from({length: 70}, (_, i) => ({x:Math.random(), y:Math.random(), r:.4+Math.random()*1.5, phase:i*.8}));
+  function resize(){ const dpr=Math.min(window.devicePixelRatio||1,2); canvas.width=innerWidth*dpr; canvas.height=innerHeight*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  function frame(time){
+    resize(); ctx.clearRect(0,0,innerWidth,innerHeight);
+    const night=document.body.classList.contains('night');
+    if(night){ dots.forEach((dot)=>{ const twinkle=.45+.55*Math.sin(time*.001+dot.phase)**2; ctx.fillStyle=`rgba(174,208,255,${twinkle*.7})`; ctx.beginPath(); ctx.arc(dot.x*innerWidth,dot.y*innerHeight,dot.r,0,Math.PI*2);ctx.fill(); }); }
+    else { const pulse=reduced?0:Math.sin(time*.0007)*4; const sun=ctx.createRadialGradient(innerWidth*.88,innerHeight*.1,8,innerWidth*.88,innerHeight*.1,110+pulse); sun.addColorStop(0,'rgba(255,218,101,.24)'); sun.addColorStop(1,'rgba(255,218,101,0)'); ctx.fillStyle=sun; ctx.fillRect(innerWidth*.68,0,innerWidth*.32,innerHeight*.36); }
+    if(!reduced) requestAnimationFrame(frame);
+  }
+  window.addEventListener('resize',resize,{passive:true});
+  if(reduced) frame(0); else requestAnimationFrame(frame);
 }
 
 function updateProgress() {
@@ -160,6 +194,7 @@ function buildResult() {
   $('#resultMetadata').replaceChildren(...[t(topic), region, deadline, ...(state.demo ? [t('fictional')]:[])].map(value => {const el=document.createElement('span');el.textContent=value;return el;}));
   $('#evidenceCount').textContent = state.lang === 'uk' ? `${evidence.length} із 4 позначено` : `${evidence.length} of 4 checked`;
   $('#preparationList').innerHTML = Object.entries(CaseData.materialKeys).map(([key,label]) => `<div class="preparation-item ${evidence.includes(key) ? 'ready':''}"><span aria-hidden="true">${evidence.includes(key) ? '✓':'–'}</span><div>${escapeHtml(t(label))}<small>${escapeHtml(t(evidence.includes(key) ? 'materialReady':'materialMissing'))}</small></div></div>`).join('');
+  if(typeof CatalogUI !== 'undefined') CatalogUI.render();
 }
 
 function escapeHtml(value) { const el = document.createElement("div"); el.textContent = value; return el.innerHTML; }
@@ -262,13 +297,20 @@ $('#demoResult').addEventListener('click',()=>{if(story.value.trim().length<20){
 $('#editCase').addEventListener('click',()=>showStep(1));
 $('#printCase').addEventListener('click',()=>window.print());
 $('#downloadCase').addEventListener('click',()=>{
-  const text=['CaseBridge UA',state.demo?t('fictional'):'',$('#resultTitle').textContent,...$$('#actionList li').map((el,i)=>`${i+1}. ${el.textContent}`),'',...$$('#preparationList .preparation-item').map(el=>el.textContent),'https://legalaid.gov.ua/','',$('#draftText').textContent,'',t('disclaimer')].join('\n');
+  const text=['CaseBridge UA',state.demo?t('fictional'):'',$('#resultTitle').textContent,...$$('#actionList li').map((el,i)=>`${i+1}. ${el.textContent}`),'',...$$('#preparationList .preparation-item').map(el=>el.textContent),'',CatalogUI.exportText(),'',$('#draftText').textContent,'',t('disclaimer')].join('\n');
   const url=URL.createObjectURL(new Blob(['\uFEFF',text],{type:'text/plain;charset=utf-8'}));
   const a=document.createElement('a');a.href=url;a.download=`casebridge-${state.demo || 'request'}.txt`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);showToast(t('downloadReady'));
 });
 
+$('#themeToggle').addEventListener('click',()=>{
+  document.body.classList.toggle('night');
+  updateThemeLabel();
+  startAmbientSky();
+});
+
 applyLanguage();
 showStep(1,false);
+startAmbientSky();
 
 // WebMCP: expose the same primary route-building journey to supporting agents.
 function registerModelTools() {

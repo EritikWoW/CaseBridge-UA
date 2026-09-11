@@ -1,0 +1,223 @@
+{
+  "candidates": [
+    {
+      "url": "https://legalaid.gov.ua/postanovy-ta-uhvaly/",
+      "title": "Для судів і правоохоронних органів Контакти для надсилання постанов та ухвал Лише для процесуальних документів. Консультації та звернення громадян за цими адресами не опрацьовуютьс",
+      "source_id": "bpd",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/kliyentam/chy-mayu-ya-pravo-na-bezoplatnu-vtorynnu-pravovu-dopomogu/",
+      "title": "Право на захист і представництво інтересів у суді",
+      "source_id": "bpd",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/kliyentam/chy-mayu-ya-pravo-na-bezoplatnu-vtorynnu-pravovu-dopomogu/lyudyam-iz-nyzkym-dohodom/",
+      "title": "Людям із низьким доходом, людям з інвалідністю Правнича допомога за умовами щодо доходу, пенсії або соціальної допомоги.",
+      "source_id": "bpd",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/kliyentam/chy-mayu-ya-pravo-na-bezoplatnu-vtorynnu-pravovu-dopomogu/vnutrishno-peremishhenym-osobam/",
+      "title": "Внутрішньо переміщеним особам Допомога з виплатами, документами, житлом, пенсіями та іншими питаннями.",
+      "source_id": "bpd",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/kliyentam/chy-mayu-ya-pravo-na-bezoplatnu-vtorynnu-pravovu-dopomogu/ya-uchasnyk-ato/",
+      "title": "Учасникам бойових дій та військовослужбовцям Захист прав ветеранів, військовослужбовців, Захисників і Захисниць.",
+      "source_id": "bpd",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/kliyentam/chlenam-simej-zagyblyh-zahysnykiv/",
+      "title": "Родинам загиблих та зниклих безвісти Допомога зі статусами, виплатами, встановленням фактів та захистом прав родини.",
+      "source_id": "bpd",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/bez-kategoriyi/yurysty-systemy-ta-advokaty-projshly-navchannya-shhodo-zastosuvannya-gaazkoyi-konvencziyi-u-spravah-pro-nezakonne-peremishhennya-ditej/",
+      "title": "Юристи системи та адвокати пройшли навчання щодо застосування Гаазької конвенції у справах про незаконне переміщення дітей",
+      "source_id": "bpd",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/kliyentam/yak-otrymaty-bpd/",
+      "title": "Як отримати допомогу",
+      "source_id": "bpd",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/00104/pryznachennia-shchomisiachnoi-adresnoi-hroshovoi-dopomohy-vnutrishno-peremishchenym-osobam-dlia-pokryttia-vytrat-na-prozhyvannia-94a1cef1-b386-44bf-94e3-c82d5a24ca22",
+      "title": "Призначення щомісячної адресної грошової допомоги внутрішньо переміщеним особам для покриття витрат на проживання, в тому числі на оплату житлово-комунальних послуг",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/01599/pryznachennia-odnorazovoi-hroshovoi-dopomohy-postrazhdalym-osobam-ta-vnutrishno-peremishchenym-osobam-31a01077-a3a4-456d-945a-1b3481a08646",
+      "title": "Призначення одноразової грошової допомоги постраждалим особам та внутрішньо переміщеним особам",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/01622/pryznachennia-hroshovoi-kompensatsii-za-nalezhni-dlia-otrymannia-zhyli-prymishchennia-dlia-vnutrishno-peremishchenykh-osib-iaki--d7eaac3a-caf1-4810-b44f-09443560e3ea",
+      "title": "Призначення грошової компенсації за належні для отримання жилі приміщення для внутрішньо переміщених осіб, які захищали незалежність, суверенітет та територіальну цілісність Україн",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/01746/pryiniattia-rishennia-pro-nadannia-hroshovoi-kompensatsii-postrazhdalym-zhytlovi-budynky-kvartyry-iakykh-zruinovano-vnaslidok-na-0fe6e45b-3d5a-4f44-a4b6-b3e750c76891",
+      "title": "Прийняття рішення про надання грошової компенсації постраждалим, житлові будинки (квартири) яких зруйновано внаслідок надзвичайної ситуації воєнного характеру, спричиненої збройною",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/01747/pryiniattia-rishennia-pro-nadannia-hroshovoi-dopomohy-postrazhdalym-vid-nadzvychainykh-sytuatsii-0ca7baf5-ff52-4448-b7cd-0d4fcedfc14f",
+      "title": "Прийняття рішення про надання грошової допомоги постраждалим від надзвичайних ситуацій",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/01337/vydacha-dovidky-shcho-vnutrishno-peremishchena-osoba-prozhyvaie-na-terytorii-hromady-09cb2416-3e07-4290-865e-452d3e211b51",
+      "title": "Видача довідки, що внутрішньо переміщена особа проживає на території громади",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/02498/nadannia-zhody-na-pererakhuvannia-koshtiv-iak-oplaty-hroshovoi-kompensatsii-za-nalezhni-dlia-otrymannia-zhyli-prymishchennia-dli-7dc5e31e-8479-4461-b5f8-00add17851bb",
+      "title": "Надання згоди на перерахування коштів як оплати грошової компенсації за належні для отримання жилі приміщення для внутрішньо переміщених осіб, які захищали незалежність, сувереніте",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/02129/vydacha-dublikata-dovidky-pro-vziattia-na-oblik-vnutrishno-peremishchenoi-osoby-b67b5cce-a2cc-435b-875d-040f4bf8dbda",
+      "title": "Видача дубліката довідки про взяття на облік внутрішньо переміщеної особи",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/01324/nadannia-pilhovoho-dovhostrokovoho-derzhavnoho-kredytu-vnutrishno-peremishchenym-osobam-uchasnykam-provedennia-antyterorystychno-d3c55265-addf-4003-bf11-914e6f763f0c",
+      "title": "Надання пільгового довгострокового державного кредиту внутрішньо переміщеним особам, учасникам проведення антитерористичної операції та/або учасникам проведення операції Об’єднаних",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/00169/vydacha-dovidky-pro-vziattia-na-oblik-vnutrishno-peremishchenoi-osoby-e0d66712-cab9-43a2-8f11-2daa4b395bc6",
+      "title": "Видача довідки про взяття на облік внутрішньо переміщеної особи",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/01624/pryiniattia-rishennia-pro-skasuvannia-dii-dovidky-pro-vziattia-na-oblik-vnutrishno-peremishchenoi-osoby-za-zaiavoiu-vnutrishno-p",
+      "title": "Відмова від довідки про взяття на облік внутрішньо переміщеної особи, за заявою особи",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/01257/vziattia-na-oblik-vnutrishno-peremishchenykh-osib-iaki-potrebuiut-nadannia-zhytlovoho-prymishchennia-z-fondiv-zhytla-dlia-tymcha-4752600c-25ff-4cc8-98d8-87c2ec28cdf8",
+      "title": "Взяття на облік внутрішньо переміщених осіб, які потребують надання житлового приміщення з фондів житла для тимчасового проживання",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/02416/nadannia-kompensatsii-vytrat-za-tymchasove-rozmishchennia-vnutrishno-peremishchenykh--osib-iaki-peremistylysia-u-period-voiennoh-4d399217-8272-426e-b2bb-7046b82f8ddd",
+      "title": "Компенсація витрат за тимчасове розміщення внутрішньо переміщених осіб",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://guide.diia.gov.ua/register/01433/rishennia-pro-prodovzhennia-stroku-nadannia-zhytlovoho-prymishchennia-z-fondiv-zhytla-dlia-tymchasovoho-prozhyvannia-vnutrishno-",
+      "title": "Рішення про продовження строку надання житлового приміщення з фондів житла для тимчасового проживання внутрішньо переміщених осіб",
+      "source_id": "diia",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://help.unhcr.org/ukraine/uk/ukraine-uk-where-to-seek-help-ua/",
+      "title": "Де знайти допомогу",
+      "source_id": "unhcr",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://help.unhcr.org/ukraine/uk/ukraine-uk-where-to-seek-help-ua/gbv_partners_ukr/",
+      "title": "Допомога у випадку насильства",
+      "source_id": "unhcr",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://help.unhcr.org/ukraine/uk/ukraine-uk-where-to-seek-help-ua/multi-purpose-cash-assistance-programme-for-idps/",
+      "title": "Програма грошової допомоги УВКБ ООН в Україні",
+      "source_id": "unhcr",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://help.unhcr.org/ukraine/uk/%d1%81%d0%bf%d0%be%d1%81%d0%be%d0%b1%d0%b8-%d0%b2%d0%b8%d0%bf%d0%bb%d0%b0%d1%82%d0%b8-%d0%b3%d1%80%d0%be%d1%88%d0%be%d0%b2%d0%be%d1%97-%d0%b4%d0%be%d0%bf%d0%be%d0%bc%d0%be%d0%b3%d0%b8/",
+      "title": "Способи виплати грошової допомоги",
+      "source_id": "unhcr",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://help.unhcr.org/ukraine/uk/%d0%b3%d1%80%d0%be%d1%88%d0%be%d0%b2%d0%b0-%d0%b4%d0%be%d0%bf%d0%be%d0%bc%d0%be%d0%b3%d0%b0-%d0%b2%d1%96%d0%b4-%d1%83%d0%b2%d0%ba%d0%b1-%d0%be%d0%be%d0%bd-%d0%b4%d0%bb%d1%8f-%d0%bf%d1%80%d0%b8%d0%b4/",
+      "title": "Грошова допомога від УВКБ ООН для придбання твердого палива",
+      "source_id": "unhcr",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://help.unhcr.org/ukraine/uk/safe-online/respond/",
+      "title": "Протидійте насильству в інтернеті та звертайтеся по допомогу",
+      "source_id": "unhcr",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://help.unhcr.org/ukraine/uk/ukraine-uk-where-to-seek-help-ua/report-fraud-misconduct-and-sexual-abuse/",
+      "title": "Повідомлення про шахрайство, неправомірну поведінку та сексуальну експлуатацію і наругу",
+      "source_id": "unhcr",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://help.unhcr.org/ukraine/uk/fraud-committed-by-forcibly-displaced-and-stateless-persons/",
+      "title": "Шахрайство, вчинене особами, які перебувають у примусовому переміщенні або є без громадянства",
+      "source_id": "unhcr",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://help.unhcr.org/ukraine/uk/misconduct-by-anyone-working-for-or-with-unhcr/",
+      "title": "Неправомірна поведінка будь-кого, хто працює в УВКБ ООН або співпрацює з ним",
+      "source_id": "unhcr",
+      "discovered_at": "2026-09-10T20:26:14.627814+00:00",
+      "status": "pending_review"
+    }
+  ],
+  "changes": [],
+  "updated_at": "2026-09-10T20:26:14.627814+00:00"
+}

@@ -15,7 +15,7 @@ People in stressful situations often do not know the legal name of their problem
 3. Mark which evidence is already available.
 4. Receive an ordered action plan and a structured draft request.
 
-The prototype runs entirely in the browser and does not transmit or retain entered information.
+The intake runs in the browser and does not transmit or retain entered information. The browser downloads a public help catalog from this repository; those requests contain no intake answers.
 
 ## Safety and scope
 
@@ -50,10 +50,29 @@ Vanilla HTML, CSS, and JavaScript. No build step, account, API key, or backend i
 ### Checks
 
 ```bash
-node --test tests/prototype.test.cjs
+node --test tests/*.test.cjs
+python -m unittest discover -s tests -p 'test_*.py'
 ```
 
 These checks cover demo-data integrity, input validation, source references, privacy-related API use, syntax, and accessibility-related CSS guards. They are not a substitute for browser, screen-reader, or legal-content review.
+
+## Public help catalog
+
+The results match the selected topic and IDP status to reviewed source links from Free Legal Aid, Guide Diia, and UNHCR Ukraine. These are referrals and information pages, not eligibility decisions or verified nearby appointments. Region selection is used to explain the office-directory next step; no geographical distance is invented.
+
+`scripts/refresh_catalog.py` downloads public seed pages after checking robots rules. It extracts titles and candidate links, fingerprints source text, and updates availability observations. It does not follow discovered links, use private APIs, copy full articles, or send case data anywhere. Automated availability checks and editorial description dates are separate.
+
+The `Refresh public help catalog` GitHub Actions workflow runs daily at 06:23 UTC, on relevant code changes, or manually. It commits only catalog observations and the review queue. GitHub may delay schedules or disable scheduled runs after prolonged repository inactivity.
+
+The live site reads `dist/data/catalog.json` from this public repository on page load or when the user refreshes the catalog, with a bundled fallback. A failed source check keeps prior observations and displays a warning; a changed source stays flagged until reviewed. This updates catalog data without republishing the application.
+
+To collect locally:
+
+```bash
+python scripts/refresh_catalog.py
+```
+
+See [catalog maintenance](docs/CATALOG.md) for review and failure handling.
 
 ## License
 

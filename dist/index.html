@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+    <div class="ambient-glow ambient-glow-a" aria-hidden="true"></div>
+    <div class="ambient-glow ambient-glow-b" aria-hidden="true"></div>
     <a class="skip-link" href="#workspace" data-i18n="skip">Перейти до анкети</a>
     <svg aria-hidden="true" class="svg-defs">
       <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.7 2.9 8.1 7 10 4.1-1.9 7-5.3 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
@@ -29,6 +32,7 @@
       </a>
       <div class="header-actions">
         <button class="quiet-button" id="demoToggle" type="button" aria-controls="demoGallery" aria-expanded="true" data-i18n="demoToggle">Демо-сценарії</button>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☼</span><span id="themeLabel">Нічний режим</span></button>
         <span class="verified"><span></span><span data-i18n="verified">Перевірені державні контакти</span></span>
         <button class="lang-switch" id="langSwitch" type="button" aria-label="Switch language"><b>UA</b><span>EN</span></button>
       </div>
@@ -138,6 +142,7 @@
             </div>
             <div class="result-metadata" id="resultMetadata"></div>
             <div class="result-toolbar"><button class="quiet-button" id="editCase" type="button" data-i18n="editCase">Редагувати відповіді</button><div><button class="quiet-button" id="downloadCase" type="button" data-i18n="download">Завантажити .txt</button><button class="quiet-button" id="printCase" type="button" data-i18n="print">Друк / PDF</button></div></div>
+            <section id="helpCatalog" class="help-catalog" aria-label="Каталог допомоги / Help catalog"></section>
             <div class="result-grid">
               <div class="action-plan card">
                 <div class="card-heading"><span data-i18n="planTitle">Ваші наступні кроки</span><small id="urgencyBadge">Рекомендовано</small></div>
@@ -175,6 +180,8 @@
     <dialog id="replaceDialog" aria-labelledby="replaceTitle"><h2 id="replaceTitle" data-i18n="replaceTitle">Замінити поточні відповіді?</h2><p data-i18n="replaceText">Ця дія очистить введений текст і позначені матеріали. Вони не зберігаються на сервері.</p><div class="dialog-actions"><button class="button secondary" id="cancelReplace" data-i18n="cancel">Залишити</button><button class="button primary" id="confirmReplace" data-i18n="replace">Замінити</button></div></dialog>
     <noscript>Для роботи анкети увімкніть JavaScript. Офіційна правнича допомога: <a href="https://legalaid.gov.ua/">legalaid.gov.ua</a>.</noscript>
     <script src="./case-data.js"></script>
+    <script src="./catalog-core.js"></script>
     <script src="./app.js"></script>
+    <script src="./catalog-ui.js"></script>
   </body>
 </html>

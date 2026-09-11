@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-09-10T20:26:14.627814+00:00",
+  "sources": [
+    {
+      "id": "bpd",
+      "name": "Безоплатна правнича допомога",
+      "url": "https://legalaid.gov.ua/",
+      "status": "available",
+      "checked_at": "2026-09-10T20:26:14.627814+00:00",
+      "last_success_at": "2026-09-10T20:26:14.627814+00:00",
+      "title": "Безоплатна правнича допомога",
+      "fingerprint": "5422d042c4f3a4478d44b6e5cdfb4c8b056a5e2ffd75c5655782c981ce4147dc",
+      "error": null
+    },
+    {
+      "id": "diia",
+      "name": "Гід Дія",
+      "url": "https://guide.diia.gov.ua/event/vnutrishno-peremishchena-osoba-6b312726-76e0-402f-9bcf-db880d7a2443",
+      "status": "available",
+      "checked_at": "2026-09-10T20:26:14.627814+00:00",
+      "last_success_at": "2026-09-10T20:26:14.627814+00:00",
+      "title": "Внутрішньо переміщена особа - Гід онлайн Дія",
+      "fingerprint": "e7b00bae8fb114c96b24da1b7c93e83cc72bc713c621ccaa72b764e7bea9ebf1",
+      "error": null
+    },
+    {
+      "id": "unhcr",
+      "name": "UNHCR Україна",
+      "url": "https://help.unhcr.org/ukraine/uk/ukraine-uk-where-to-seek-help-ua/legal-aid-in-ukraine-ua/",
+      "status": "available",
+      "checked_at": "2026-09-10T20:26:14.627814+00:00",
+      "last_success_at": "2026-09-10T20:26:14.627814+00:00",
+      "title": "Правова допомога - UNHCR Україна",
+      "fingerprint": "24d936e5fa7df8b5c8773b11dc9f9c5a1f9edb768eb3edb48d927f8d5dca17d0",
+      "error": null
+    }
+  ],
+  "entries": [
+    {
+      "id": "bpd-consultation",
+      "source_id": "bpd",
+      "url": "https://legalaid.gov.ua/",
+      "phone": "0800213103",
+      "topics": [
+        "housing",
+        "documents",
+        "payments",
+        "work",
+        "safety",
+        "other"
+      ],
+      "audiences": [],
+      "regions": [],
+      "kind": "consultation",
+      "reviewed_at": "2026-09-10",
+      "approved": true,
+      "uk": {
+        "title": "Первинна правнича консультація",
+        "description": "Контактний центр системи БПД: розкажіть про ситуацію та уточніть наступний крок.",
+        "coverage": "Загальноукраїнський контакт"
+      },
+      "en": {
+        "title": "Initial legal consultation",
+        "description": "Contact Ukraine’s Free Legal Aid system to describe your situation and ask about the next step.",
+        "coverage": "National contact"
+      }
+    },
+    {
+      "id": "bpd-offices",
+      "source_id": "bpd",
+      "url": "https://legalaid.gov.ua/kliyentam/poshuk-najblyzhchogo-tsentru-ta-dystantsijnyh-punktiv/",
+      "phone": null,
+      "topics": [
+        "housing",
+        "documents",
+        "payments",
+        "work",
+        "safety",
+        "other"
+      ],
+      "audiences": [],
+      "regions": [],
+      "kind": "directory",
+      "reviewed_at": "2026-09-10",
+      "approved": true,
+      "uk": {
+        "title": "Знайти бюро у вашому регіоні",
+        "description": "Офіційний пошук бюро за містом, адресою та областю. Перед візитом перевірте графік.",
+        "coverage": "Пошук по Україні"
+      },
+      "en": {
+        "title": "Find a legal aid office",
+        "description": "Use the official directory to search by city, address, or region. Confirm opening hours before visiting.",
+        "coverage": "Ukraine-wide directory"
+      }
+    },
+    {
+      "id": "diia-idp",
+      "source_id": "diia",
+      "url": "https://guide.diia.gov.ua/event/vnutrishno-peremishchena-osoba-6b312726-76e0-402f-9bcf-db880d7a2443",
+      "phone": null,
+      "topics": [
+        "payments",
+        "documents",
+        "housing"
+      ],
+      "audiences": [
+        "idp"
+      ],
+      "regions": [],
+      "kind": "information",
+      "reviewed_at": "2026-09-10",
+      "approved": true,
+      "uk": {
+        "title": "Послуги для внутрішньо переміщених осіб",
+        "description": "Добірка адміністративних послуг: довідки, житло та допомога. Умови уточнюйте у картці конкретної послуги.",
+        "coverage": "Державний довідник послуг"
+      },
+      "en": {
+        "title": "Services for internally displaced people",
+        "description": "Browse services related to certificates, housing, and assistance. Check the individual service page for its conditions.",
+        "coverage": "Government service guide"
+      }
+    },
+    {
+      "id": "unhcr-legal",
+      "source_id": "unhcr",
+      "url": "https://help.unhcr.org/ukraine/uk/ukraine-uk-where-to-seek-help-ua/legal-aid-in-ukraine-ua/",
+      "phone": "0800307711",
+      "topics": [
+        "documents",
+        "payments",
+        "housing"
+      ],
+      "audiences": [
+        "idp"
+      ],
+      "regions": [],
+      "kind": "consultation",
+      "reviewed_at": "2026-09-10",
+      "approved": true,
+      "uk": {
+        "title": "Правова допомога партнерів UNHCR",
+        "description": "Інформація про правову підтримку переміщених і постраждалих від війни людей. Гарячу лінію обслуговує Donbas SOS.",
+        "coverage": "Контакти партнерів в Україні"
+      },
+      "en": {
+        "title": "Legal support through UNHCR partners",
+        "description": "Legal support information for displaced and war-affected people. The listed hotline is operated by Donbas SOS.",
+        "coverage": "Partner contacts in Ukraine"
+      }
+    }
+  ]
+}
