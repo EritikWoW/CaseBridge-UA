@@ -20,12 +20,14 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / 'dist/data/catalog.json'
 QUEUE = ROOT / 'data/review-queue.json'
 AGENT = 'CaseBridgeCatalog/1.0 (+https://github.com/EritikWoW/CaseBridge-UA)'
-HOSTS = {'legalaid.gov.ua', 'guide.diia.gov.ua', 'help.unhcr.org'}
+HOSTS = {'legalaid.gov.ua', 'guide.diia.gov.ua', 'help.unhcr.org', 'osvita.diia.gov.ua', 'howareu.com'}
 LIMIT = 2_000_000
 SEEDS = {
     'bpd': 'https://legalaid.gov.ua/',
     'diia': 'https://guide.diia.gov.ua/event/vnutrishno-peremishchena-osoba-6b312726-76e0-402f-9bcf-db880d7a2443',
     'unhcr': 'https://help.unhcr.org/ukraine/uk/ukraine-uk-where-to-seek-help-ua/legal-aid-in-ukraine-ua/',
+    'osvita': 'https://osvita.diia.gov.ua/',
+    'howareu': 'https://howareu.com/',
 }
 
 
@@ -105,7 +107,7 @@ class MetadataParser(HTMLParser):
             parsed = urlsplit(urljoin(self.url, href))
             link = urlunsplit((parsed.scheme, parsed.netloc, parsed.path, '', ''))
             label = ' '.join(' '.join(chunks).split())[:180]
-            if safe_url(link) and label and re.search(r'допом|прав|документ|виплат|житл|переміщ|legal|aid|service', label, re.I):
+            if safe_url(link) and label and re.search(r'допом|прав|документ|виплат|житл|переміщ|навч|освіт|кар.єр|хаб|підтрим|послуг|legal|aid|service|learn|career', label, re.I):
                 self.links.append({'url': link, 'title': label})
 
     def handle_data(self, text):

@@ -1,7 +1,8 @@
 /* Pure, local matching. No case content is sent to a service. */
 const HelpCatalog = (() => {
-  const hosts = new Set(['legalaid.gov.ua','guide.diia.gov.ua','help.unhcr.org']);
-  const topics = new Set(['housing','documents','payments','work','safety','other']);
+  const hosts = new Set(['legalaid.gov.ua','guide.diia.gov.ua','help.unhcr.org','osvita.diia.gov.ua','howareu.com']);
+  const topics = new Set(['housing','documents','payments','work','safety','other','education','wellbeing','community']);
+  const areas = {rights:['housing','documents','safety','other'],social:['payments','community'],learning:['education'],career:['work'],wellbeing:['wellbeing']};
   function safeUrl(value) {
     try { const u=new URL(value); return u.protocol==='https:' && hosts.has(u.hostname) && !u.username && !u.password && !u.port; } catch { return false; }
   }
@@ -37,6 +38,24 @@ const HelpCatalog = (() => {
         return {entry,source,needsCheck,stale,score};
       }).sort((a,b)=>b.score-a.score || a.entry.id.localeCompare(b.entry.id)).slice(0,4);
   }
-  return {validate,match,safeUrl};
+  function browse(data, {query='',category='all',audience='all',saved=[]}={}, now=Date.now()) {
+    validate(data);
+    const words=String(query).trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+    return data.entries.filter(e => {
+      if(!e.approved || (category!=='all' && !areas[category]?.some(t=>e.topics.includes(t))))return false;
+      if(audience==='idp' && !e.audiences.includes('idp'))return false;
+      if(audience==='saved' && !saved.includes(e.id))return false;
+      const source=data.sources.find(s=>s.id===e.source_id);
+      const synonyms={education:'навчання learning освіта skills',wellbeing:'добробут психологічна підтримка wellbeing mental health',community:'громада community',work:'робота праця career work',housing:'житло оренда housing rent',payments:'виплати payments',documents:'документи documents'};
+      const haystack=[...Object.values(e.uk),...Object.values(e.en),source.name,source.name_en||'',...e.topics.map(t=>synonyms[t]||t),...e.audiences,e.audiences.includes('idp')?'ВПО IDP':''].join(' ').toLocaleLowerCase();
+      return words.every(word=>haystack.includes(word));
+    }).map(entry=>{
+      const source=data.sources.find(s=>s.id===entry.source_id);
+      const age=now-Date.parse(entry.reviewed_at+'T00:00:00Z');
+      const checked=source.last_success_at?now-Date.parse(source.last_success_at):Infinity;
+      return {entry,source,needsCheck:age>30*86400000 || age<0 || checked>7*86400000 || checked<0 || !Number.isFinite(checked) || source.status!=='available' || source.review_required===true};
+    });
+  }
+  return {validate,match,browse,safeUrl,areas};
 })();
 if(typeof module!=='undefined' && module.exports) module.exports=HelpCatalog;

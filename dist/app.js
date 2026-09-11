@@ -75,45 +75,12 @@ function applyLanguage() {
   $("#langSwitch").innerHTML = state.lang === "uk" ? "<b>UA</b><span>EN</span>" : "<span>UA</span><b>EN</b>";
   $("#langSwitch").setAttribute('aria-label', state.lang === 'uk' ? 'Switch to English' : 'Перемкнути на українську');
   document.title = state.lang === 'uk' ? 'CaseBridge UA — ваш наступний крок' : 'CaseBridge UA — your next step';
-  updateThemeLabel();
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('casebridge:language'));
   renderRegions();
   renderDemos();
   refreshActionLabel();
   updateProgress();
   if (state.step === 4) buildResult();
-}
-
-function updateThemeLabel() {
-  const night = Boolean(document.body?.classList?.contains('night'));
-  const label = $('#themeLabel');
-  const button = $('#themeToggle');
-  if (!label || !button) return;
-  label.textContent = night
-    ? (state.lang === 'uk' ? 'Денний режим' : 'Day mode')
-    : (state.lang === 'uk' ? 'Нічний режим' : 'Night mode');
-  button.setAttribute('aria-pressed', String(night));
-  button.setAttribute('aria-label', label.textContent);
-  $('.theme-icon').textContent = night ? '☾' : '☼';
-}
-
-function startAmbientSky() {
-  if (window.__ambientSkyStarted) return;
-  window.__ambientSkyStarted = true;
-  const canvas = $('#ambientCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const dots = Array.from({length: 70}, (_, i) => ({x:Math.random(), y:Math.random(), r:.4+Math.random()*1.5, phase:i*.8}));
-  function resize(){ const dpr=Math.min(window.devicePixelRatio||1,2); canvas.width=innerWidth*dpr; canvas.height=innerHeight*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
-  function frame(time){
-    resize(); ctx.clearRect(0,0,innerWidth,innerHeight);
-    const night=document.body.classList.contains('night');
-    if(night){ dots.forEach((dot)=>{ const twinkle=.45+.55*Math.sin(time*.001+dot.phase)**2; ctx.fillStyle=`rgba(174,208,255,${twinkle*.7})`; ctx.beginPath(); ctx.arc(dot.x*innerWidth,dot.y*innerHeight,dot.r,0,Math.PI*2);ctx.fill(); }); }
-    else { const pulse=reduced?0:Math.sin(time*.0007)*4; const sun=ctx.createRadialGradient(innerWidth*.88,innerHeight*.1,8,innerWidth*.88,innerHeight*.1,110+pulse); sun.addColorStop(0,'rgba(255,218,101,.24)'); sun.addColorStop(1,'rgba(255,218,101,0)'); ctx.fillStyle=sun; ctx.fillRect(innerWidth*.68,0,innerWidth*.32,innerHeight*.36); }
-    if(!reduced) requestAnimationFrame(frame);
-  }
-  window.addEventListener('resize',resize,{passive:true});
-  if(reduced) frame(0); else requestAnimationFrame(frame);
 }
 
 function updateProgress() {
@@ -164,6 +131,16 @@ function validateStep() {
 
 function selectedValues(name) { return $$(`input[name="${name}"]:checked`).map(el => el.value); }
 
+function routeActions(lang) {
+  const copy=routeCopy[lang],urgent=$('#danger').checked,deadline=$('#deadline').value;
+  const actions=[...(urgent?copy.urgentActions:copy.actions)];
+  if(!urgent){
+    actions[1]=CaseData.topicNotes[state.topic||'other'][lang==='uk'?0:1];
+    if(deadline==='today'||deadline==='week')actions[0]+=lang==='uk'?' Повідомте про зазначений вами близький строк; юридичний строк має уточнити фахівець.':' Mention your stated near-term deadline; a professional must confirm any legal time limit.';
+  }
+  return actions;
+}
+
 function buildResult() {
   const copy = routeCopy[state.lang];
   const isUrgent = $("#danger").checked;
@@ -173,11 +150,9 @@ function buildResult() {
   const deadlineValue = $('#deadline').value;
   $('#urgencyBadge').classList.toggle('urgent',isUrgent || deadlineValue === 'today');
   const topic = state.topic || 'other';
-  const actions = [...(isUrgent ? copy.urgentActions : copy.actions)];
+  const actions = routeActions(state.lang);
   if (!isUrgent) {
-    actions[1] = CaseData.topicNotes[topic][state.lang === 'uk' ? 0:1];
     if (deadlineValue === 'today' || deadlineValue === 'week') {
-      actions[0] += state.lang === 'uk' ? ' Повідомте про зазначений вами близький строк; юридичний строк має уточнити фахівець.' : ' Mention your stated near-term deadline; a professional must confirm any legal time limit.';
       $('#urgencyBadge').textContent = state.lang === 'uk' ? 'Близький строк' : 'Near-term deadline';
     }
   }
@@ -255,6 +230,10 @@ Object.assign(translations.en, {
 $$('[data-i18n]').forEach(el => { translations.uk[el.dataset.i18n] = el.textContent; });
 $$('[data-i18n-placeholder]').forEach(el => { translations.uk[el.dataset.i18nPlaceholder] = el.placeholder; });
 Object.assign(translations.uk,{ materialReady:'Позначено як наявне',materialMissing:'Не позначено — уточніть, чи потрібно',demoLoaded:'Вигаданий приклад завантажено',downloadReady:'Текстовий файл підготовлено',verified:'Офіційні контакти допомоги' });
+if (typeof ExperienceCopy !== 'undefined') {
+  Object.assign(translations.uk, ExperienceCopy.uk);
+  Object.assign(translations.en, ExperienceCopy.en);
+}
 
 const regions = [
  ['Вінницька','Vinnytsia'],['Волинська','Volyn'],['Дніпропетровська','Dnipropetrovsk'],['Донецька','Donetsk'],['Житомирська','Zhytomyr'],['Закарпатська','Zakarpattia'],['Запорізька','Zaporizhzhia'],['Івано-Франківська','Ivano-Frankivsk'],['Київська','Kyiv region'],['Кіровоградська','Kirovohrad'],['Луганська','Luhansk'],['Львівська','Lviv'],['Миколаївська','Mykolaiv'],['Одеська','Odesa'],['Полтавська','Poltava'],['Рівненська','Rivne'],['Сумська','Sumy'],['Тернопільська','Ternopil'],['Харківська','Kharkiv'],['Херсонська','Kherson'],['Хмельницька','Khmelnytskyi'],['Черкаська','Cherkasy'],['Чернівецька','Chernivtsi'],['Чернігівська','Chernihiv'],['м. Київ','Kyiv city'],['АР Крим','Autonomous Republic of Crimea'],['м. Севастополь','Sevastopol'],['За кордоном','Outside Ukraine']
@@ -302,15 +281,8 @@ $('#downloadCase').addEventListener('click',()=>{
   const a=document.createElement('a');a.href=url;a.download=`casebridge-${state.demo || 'request'}.txt`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);showToast(t('downloadReady'));
 });
 
-$('#themeToggle').addEventListener('click',()=>{
-  document.body.classList.toggle('night');
-  updateThemeLabel();
-  startAmbientSky();
-});
-
 applyLanguage();
 showStep(1,false);
-startAmbientSky();
 
 // WebMCP: expose the same primary route-building journey to supporting agents.
 function registerModelTools() {
@@ -341,6 +313,7 @@ function registerModelTools() {
       story.dispatchEvent(new Event("input"));
       buildResult();
       showStep(4);
+      window.dispatchEvent(new Event('casebridge:route'));
       return { status: "staged", urgent: Boolean(input.danger), officialContact: "0 800 213 103" };
     }
   };

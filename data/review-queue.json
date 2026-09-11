@@ -216,8 +216,50 @@
       "source_id": "unhcr",
       "discovered_at": "2026-09-10T20:26:14.627814+00:00",
       "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/kliyentam/postrazhdalym-vnaslidok-vijny/",
+      "title": "Постраждалим внаслідок війни Підтримка постраждалих від воєнних злочинів, катувань і торгівлі людьми.",
+      "source_id": "bpd",
+      "discovered_at": "2026-09-11T00:49:48.226710+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://help.unhcr.org/ukraine/uk/ukraine-uk-where-to-seek-help-ua/supporting-your-feelings-and-worries-ua/",
+      "title": "Психологічна підтримка та емоційне благополуччя",
+      "source_id": "unhcr",
+      "discovered_at": "2026-09-11T00:49:48.226710+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://help.unhcr.org/ukraine/uk/safe-online/assistance/",
+      "title": "Знаходьте підтримку в інтернеті безпечно",
+      "source_id": "unhcr",
+      "discovered_at": "2026-09-11T00:49:48.226710+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://howareu.com/self-help",
+      "title": "Самодопомога",
+      "source_id": "howareu",
+      "discovered_at": "2026-09-11T00:49:48.226710+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://howareu.com/materials",
+      "title": "Фахова підтримка",
+      "source_id": "howareu",
+      "discovered_at": "2026-09-11T00:49:48.226710+00:00",
+      "status": "pending_review"
+    },
+    {
+      "url": "https://howareu.com/mainpage_course",
+      "title": "Розпочати навчання",
+      "source_id": "howareu",
+      "discovered_at": "2026-09-11T00:49:48.226710+00:00",
+      "status": "pending_review"
     }
   ],
   "changes": [],
-  "updated_at": "2026-09-11T00:22:17.931121+00:00"
+  "updated_at": "2026-09-11T00:49:48.226710+00:00"
 }

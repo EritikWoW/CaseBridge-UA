@@ -1,38 +1,65 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-11T00:22:17.931121+00:00",
+  "updated_at": "2026-09-11T00:49:48.226710+00:00",
   "sources": [
     {
       "id": "bpd",
       "name": "Безоплатна правнича допомога",
       "url": "https://legalaid.gov.ua/",
       "status": "available",
-      "checked_at": "2026-09-11T00:22:17.931121+00:00",
-      "last_success_at": "2026-09-11T00:22:17.931121+00:00",
+      "checked_at": "2026-09-11T00:49:48.226710+00:00",
+      "last_success_at": "2026-09-11T00:49:48.226710+00:00",
       "title": "Безоплатна правнича допомога",
       "fingerprint": "5422d042c4f3a4478d44b6e5cdfb4c8b056a5e2ffd75c5655782c981ce4147dc",
-      "error": null
+      "error": null,
+      "name_en": "Free Legal Aid"
     },
     {
       "id": "diia",
       "name": "Гід Дія",
       "url": "https://guide.diia.gov.ua/event/vnutrishno-peremishchena-osoba-6b312726-76e0-402f-9bcf-db880d7a2443",
       "status": "available",
-      "checked_at": "2026-09-11T00:22:17.931121+00:00",
-      "last_success_at": "2026-09-11T00:22:17.931121+00:00",
+      "checked_at": "2026-09-11T00:49:48.226710+00:00",
+      "last_success_at": "2026-09-11T00:49:48.226710+00:00",
       "title": "Внутрішньо переміщена особа - Гід онлайн Дія",
       "fingerprint": "e7b00bae8fb114c96b24da1b7c93e83cc72bc713c621ccaa72b764e7bea9ebf1",
-      "error": null
+      "error": null,
+      "name_en": "Guide Diia"
     },
     {
       "id": "unhcr",
       "name": "UNHCR Україна",
       "url": "https://help.unhcr.org/ukraine/uk/ukraine-uk-where-to-seek-help-ua/legal-aid-in-ukraine-ua/",
       "status": "available",
-      "checked_at": "2026-09-11T00:22:17.931121+00:00",
-      "last_success_at": "2026-09-11T00:22:17.931121+00:00",
+      "checked_at": "2026-09-11T00:49:48.226710+00:00",
+      "last_success_at": "2026-09-11T00:49:48.226710+00:00",
       "title": "Правова допомога - UNHCR Україна",
       "fingerprint": "24d936e5fa7df8b5c8773b11dc9f9c5a1f9edb768eb3edb48d927f8d5dca17d0",
+      "error": null,
+      "name_en": "UNHCR Ukraine"
+    },
+    {
+      "id": "osvita",
+      "name": "Дія.Освіта",
+      "name_en": "Diia.Education",
+      "url": "https://osvita.diia.gov.ua/",
+      "status": "unavailable",
+      "checked_at": "2026-09-11T00:49:48.226710+00:00",
+      "last_success_at": null,
+      "title": "Дія.Освіта",
+      "fingerprint": null,
+      "error": "ValueError"
+    },
+    {
+      "id": "howareu",
+      "name": "Ти як?",
+      "name_en": "How Are You?",
+      "url": "https://howareu.com/",
+      "status": "available",
+      "checked_at": "2026-09-11T00:49:48.226710+00:00",
+      "last_success_at": "2026-09-11T00:49:48.226710+00:00",
+      "title": "Програма ментального здоров'я | Ти як?",
+      "fingerprint": "a549a69d43318b0ea34ee54d22840a05c501f0ccf115a2a0e8e7ac37aa918861",
       "error": null
     }
   ],
@@ -149,6 +176,129 @@
         "title": "Legal support through UNHCR partners",
         "description": "Legal support information for displaced and war-affected people. The listed hotline is operated by Donbas SOS.",
         "coverage": "Partner contacts in Ukraine"
+      }
+    },
+    {
+      "id": "osvita-courses",
+      "source_id": "osvita",
+      "url": "https://osvita.diia.gov.ua/courses",
+      "phone": null,
+      "topics": [
+        "education"
+      ],
+      "audiences": [],
+      "regions": [],
+      "kind": "information",
+      "reviewed_at": "2026-09-11",
+      "approved": true,
+      "uk": {
+        "title": "Навички для нового старту",
+        "description": "Освітні серіали з цифрових навичок, онлайн-безпеки й інших тем. Оберіть курс і перевірте вимоги на платформі.",
+        "coverage": "Онлайн · освітня платформа"
+      },
+      "en": {
+        "title": "Skills for a fresh start",
+        "description": "Explore learning series on digital skills, online safety and other topics. Choose a course and check its requirements on the platform.",
+        "coverage": "Online · learning platform"
+      }
+    },
+    {
+      "id": "osvita-career",
+      "source_id": "osvita",
+      "url": "https://osvita.diia.gov.ua/career-studio",
+      "phone": null,
+      "topics": [
+        "work",
+        "education"
+      ],
+      "audiences": [],
+      "regions": [],
+      "kind": "information",
+      "reviewed_at": "2026-09-11",
+      "approved": true,
+      "uk": {
+        "title": "Підготуватися до пошуку роботи",
+        "description": "Кар’єрна студія: інструменти для резюме, підготовки до співбесіди та вибору навичок для розвитку.",
+        "coverage": "Онлайн · кар’єрна підготовка"
+      },
+      "en": {
+        "title": "Prepare for your job search",
+        "description": "Career Studio offers tools for CVs, interview preparation and identifying skills to develop.",
+        "coverage": "Online · career preparation"
+      }
+    },
+    {
+      "id": "osvita-hubs",
+      "source_id": "osvita",
+      "url": "https://osvita.diia.gov.ua/hubs",
+      "phone": null,
+      "topics": [
+        "education",
+        "community"
+      ],
+      "audiences": [],
+      "regions": [],
+      "kind": "information",
+      "reviewed_at": "2026-09-11",
+      "approved": true,
+      "uk": {
+        "title": "Навчання з підтримкою поруч",
+        "description": "Перегляньте мережу цифрових хабів. Уточніть доступність, графік і можливості навчання в обраному місці.",
+        "coverage": "Каталог хабів · Україна"
+      },
+      "en": {
+        "title": "Learn with local support",
+        "description": "Explore the digital hub network. Check accessibility, hours and learning options with your chosen hub.",
+        "coverage": "Hub directory · Ukraine"
+      }
+    },
+    {
+      "id": "howareu-online",
+      "source_id": "howareu",
+      "url": "https://howareu.com/khto-mozhe-dopomohty-onlain-zvernennia",
+      "phone": null,
+      "topics": [
+        "wellbeing"
+      ],
+      "audiences": [],
+      "regions": [],
+      "kind": "information",
+      "reviewed_at": "2026-09-11",
+      "approved": true,
+      "uk": {
+        "title": "Знайти психологічну підтримку онлайн",
+        "description": "Добірка каналів підтримки на платформі «Ти як?». Формат, вартість і умови звернення уточнюйте в надавача.",
+        "coverage": "Довідник підтримки · не екстрена служба"
+      },
+      "en": {
+        "title": "Find mental health support online",
+        "description": "Explore support channels listed by How Are You? Confirm the format, cost and access conditions with the provider.",
+        "coverage": "Support directory · not an emergency service"
+      }
+    },
+    {
+      "id": "howareu-community",
+      "source_id": "howareu",
+      "url": "https://howareu.com/facilities",
+      "phone": null,
+      "topics": [
+        "wellbeing",
+        "community"
+      ],
+      "audiences": [],
+      "regions": [],
+      "kind": "information",
+      "reviewed_at": "2026-09-11",
+      "approved": true,
+      "uk": {
+        "title": "Підтримка у вашій громаді",
+        "description": "Знайдіть надавачів послуг у довіднику «Ти як?». Перш ніж іти, перевірте графік і відповідність послуги вашому запиту.",
+        "coverage": "Каталог послуг · Україна"
+      },
+      "en": {
+        "title": "Support in your community",
+        "description": "Explore providers in the How Are You? directory. Before visiting, confirm hours and whether the service suits your needs.",
+        "coverage": "Service directory · Ukraine"
       }
     }
   ]

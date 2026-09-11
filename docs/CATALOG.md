@@ -5,8 +5,10 @@
 - `legalaid.gov.ua`: public Free Legal Aid information and an official office-directory link.
 - `guide.diia.gov.ua`: the public IDP service index. Its developer documentation also describes private administrative systems; this collector does not access those systems. The public guide states CC BY 4.0 unless otherwise indicated; cards attribute and link back to the source.
 - `help.unhcr.org`: Ukraine legal-assistance information and public partner contacts.
+- `osvita.diia.gov.ua`: education series, career preparation, and digital-hub directory links.
+- `howareu.com`: directories of online mental-health support and community service providers, without copied clinical recommendations.
 
-Only the three exact seed pages are fetched. No login, personal records, scraping of individual cases, external redirects, or automatic crawling of discovered links. Collection respects robots.txt, timeouts, size limits, and a descriptive user agent. A refusal or unavailable robots policy is not bypassed.
+Only the five exact seed pages are fetched. No login, personal records, scraping of individual cases, external redirects, or automatic crawling of discovered links. Collection respects robots.txt, timeouts, size limits, and a descriptive user agent. A refusal or unavailable robots policy is not bypassed. The observation concerns the seed page; a linked subpage is not claimed to have passed an automated check.
 
 ## Review boundary
 

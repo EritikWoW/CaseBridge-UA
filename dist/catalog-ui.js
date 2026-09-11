@@ -20,7 +20,7 @@ const CatalogUI = (() => {
       const cards=el('div',undefined,'help-cards');
       for(const {entry,source,needsCheck} of matches) {
         const card=el('article',undefined,'help-card');const body=entry[lang];
-        card.append(el('span',source.name,'help-provider'),el('h3',body.title),el('p',body.description),el('small',body.coverage));
+        card.append(el('span',lang==='en'?(source.name_en||source.name):source.name,'help-provider'),el('h3',body.title),el('p',body.description),el('small',body.coverage));
         const reason=el('p',entry.audiences.includes('idp')?l.idp:l.reason,'match-reason');
         if(entry.kind==='directory' && document.getElementById('region').value && document.getElementById('region').value!=='За кордоном') reason.textContent=`${l.region}: ${document.getElementById('region').selectedOptions[0].textContent}`;
         card.append(reason);
@@ -35,6 +35,7 @@ const CatalogUI = (() => {
       const list=el('ul');for(const source of catalog.sources){const item=el('li');item.append(link(source.name,source.url),el('span',`${l[source.status]} · ${date(source.checked_at,lang)}`));list.append(item);}details.append(list,el('p',l.autoNote));root.append(details);
     }
     root.append(el('p',l.privacy,'input-note'));
+    window.dispatchEvent(new Event('casebridge:catalog'));
   }
   async function read(url) {
     const response=await fetch(url,{method:'GET',credentials:'omit',referrerPolicy:'no-referrer',cache:'no-store',signal:AbortSignal.timeout(8000)});
@@ -52,6 +53,6 @@ const CatalogUI = (() => {
     if(!catalog)return '';
     return HelpCatalog.match(catalog,{topic:state.topic,statuses:selectedValues('status'),region:document.getElementById('region').value}).map(({entry,source,needsCheck})=>`${entry[state.lang].title}\n${entry.url}\n${labels[state.lang].reviewed}: ${entry.reviewed_at}${needsCheck?' · '+labels[state.lang].check:''}\n${source.name}`).join('\n\n');
   }
-  return {render,load,exportText};
+  return {render,load,exportText,snapshot:()=>catalog,status:()=>mode};
 })();
 CatalogUI.load();

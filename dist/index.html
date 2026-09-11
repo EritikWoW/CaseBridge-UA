@@ -4,16 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#071b33" />
-    <meta name="description" content="CaseBridge UA допомагає перетворити правову проблему на зрозумілий план дій і підготувати звернення." />
+    <meta name="description" content="Знайдіть правничу, соціальну, освітню підтримку та складіть власний план дій з CaseBridge UA." />
     <title>CaseBridge UA — правова допомога без лабіринтів</title>
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./experience.css" />
   </head>
   <body>
-    <canvas id="ambientCanvas" aria-hidden="true"></canvas>
-    <div class="ambient-glow ambient-glow-a" aria-hidden="true"></div>
-    <div class="ambient-glow ambient-glow-b" aria-hidden="true"></div>
     <a class="skip-link" href="#workspace" data-i18n="skip">Перейти до анкети</a>
     <svg aria-hidden="true" class="svg-defs">
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
       <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.7 2.9 8.1 7 10 4.1-1.9 7-5.3 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
       <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
       <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6 6-6-6 6-6"/></symbol>
@@ -33,6 +32,8 @@
       <div class="header-actions">
         <button class="quiet-button" id="demoToggle" type="button" aria-controls="demoGallery" aria-expanded="true" data-i18n="demoToggle">Демо-сценарії</button>
         <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☼</span><span id="themeLabel">Нічний режим</span></button>
+        <button class="quiet-button" id="motionToggle" type="button" aria-pressed="false"><span data-i18n="pauseMotion">Пауза руху</span></button>
+        <button class="quiet-button" id="focusToggle" type="button" aria-pressed="false" data-i18n="focusMode">Фокус</button>
         <span class="verified"><span></span><span data-i18n="verified">Перевірені державні контакти</span></span>
         <button class="lang-switch" id="langSwitch" type="button" aria-label="Switch language"><b>UA</b><span>EN</span></button>
       </div>
@@ -40,7 +41,9 @@
 
     <main class="app-shell">
       <aside class="journey" aria-label="Етапи звернення">
-        <div class="sidebar-intro"><span class="edition">CASEBRIDGE / 02</span><h2 data-i18n="sidebarTitle">Від ситуації — до наступного кроку.</h2><p data-i18n="sidebarText">Зрозуміти. Підготуватися. Звернутися.</p></div>
+        <div class="sidebar-intro"><span class="edition">CASEBRIDGE / UA</span><h2 data-i18n="sidebarTitle">Від ситуації — до наступного кроку.</h2><p data-i18n="sidebarText">Зрозуміти. Підготуватися. Звернутися.</p></div>
+        <nav class="main-nav" aria-label="CaseBridge"><button type="button" data-view="discover" aria-current="page"><svg><use href="#i-shield"/></svg><span data-i18n="navDiscover">Знайти підтримку</span></button><button type="button" data-view="plan"><svg><use href="#i-check"/></svg><span data-i18n="navPlan">Мій план</span><small id="planBadge">0</small></button><button type="button" data-view="wizard"><svg><use href="#i-doc"/></svg><span data-i18n="navWizard">Правовий маршрут</span></button></nav>
+        <div id="wizardJourney" hidden>
         <div class="journey-heading">
           <span class="eyebrow" data-i18n="yourRoute">Ваш маршрут</span>
           <strong id="progressLabel">Крок 1 із 4</strong>
@@ -52,6 +55,8 @@
           <li data-step-nav="3"><span>3</span><div><b data-i18n="step3">Докази</b><small data-i18n="step3s">Що вже є на руках</small></div></li>
           <li data-step-nav="4"><span>4</span><div><b data-i18n="step4">План дій</b><small data-i18n="step4s">Куди і як звернутися</small></div></li>
         </ol>
+        </div>
+        <div class="sidebar-progress"><span data-i18n="smallSteps">Малі кроки теж важливі</span><div class="mini-track"><i id="sidebarPlanProgress"></i></div><p id="sidebarPlanLabel"></p></div>
         <div class="trust-note">
           <svg><use href="#i-lock"/></svg>
           <div><b data-i18n="privacyTitle">Приватно за задумом</b><p data-i18n="privacyText">Демо не надсилає та не зберігає введені дані.</p></div>
@@ -59,6 +64,36 @@
       </aside>
 
       <section class="workspace" id="workspace" tabindex="-1">
+        <section class="app-view" id="viewDiscover">
+          <section class="welcome-scene" id="welcomeScene" aria-labelledby="welcomeTitle">
+            <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+            <div class="welcome-copy"><span class="scene-kicker" data-i18n="welcomeEyebrow">ВАШ ПРОСТІР ПІДТРИМКИ</span><h1 id="welcomeTitle" data-i18n="welcomeTitle">Наступний крок.<br>У вашому темпі.</h1><p data-i18n="welcomeHint">Права, навчання, робота й турбота про себе. Знайдіть опору та зберіть свій план.</p><button class="scene-link" type="button" data-start-search><span data-i18n="exploreSupport">Знайти потрібну допомогу</span><svg><use href="#i-arrow"/></svg></button></div>
+            <div class="support-orbit" aria-label="Напрями / Support areas">
+              <div class="orbit-rings" aria-hidden="true"><i></i><i></i><i></i></div><div class="orbit-center" aria-hidden="true"><svg><use href="#i-shield"/></svg></div>
+              <button type="button" class="orbit-node node-rights" data-category="rights"><svg><use href="#i-doc"/></svg><span data-i18n="categoryRights">Права й житло</span></button>
+              <button type="button" class="orbit-node node-learning" data-category="learning"><span aria-hidden="true">Aa</span><span data-i18n="categoryLearning">Навчання</span></button>
+              <button type="button" class="orbit-node node-work" data-category="career"><svg><use href="#i-arrow"/></svg><span data-i18n="categoryCareer">Робота</span></button>
+              <button type="button" class="orbit-node node-care" data-category="wellbeing"><span aria-hidden="true">♡</span><span data-i18n="categoryWellbeing">Добробут</span></button>
+            </div>
+            <span id="sceneCaption" class="scene-caption"></span>
+          </section>
+          <div class="discovery-toolbar"><div><h2 data-i18n="catalogTitle">Знайдіть свою точку опори</h2><p data-i18n="catalogHint">Переглядайте ресурси вільно — розповідати свою історію не обов’язково.</p></div><button id="directoryRefresh" class="quiet-button" type="button" data-i18n="refreshSources">Оновити джерела</button></div>
+          <div class="search-row"><label class="resource-search"><svg><use href="#i-search"/></svg><span class="sr-only" data-i18n="searchLabel">Пошук у каталозі</span><input id="resourceSearch" type="search" maxlength="120" autocomplete="off" data-i18n-placeholder="searchPlaceholder" placeholder="Що зараз важливо? Наприклад, житло або навчання"/><kbd aria-hidden="true">/</kbd></label><label class="audience-filter"><span class="sr-only" data-i18n="audienceLabel">Для кого</span><select id="audienceFilter"><option value="all" data-i18n="audienceAll">Для всіх</option><option value="idp" data-i18n="audienceIdp">Для ВПО</option><option value="saved" data-i18n="audienceSaved">У моєму плані</option></select></label></div>
+          <div class="category-filters" id="categoryFilters"></div>
+          <div class="directory-meta"><span id="directoryCount" role="status"></span><span id="directoryStatus"></span></div>
+          <div id="directoryCards" class="resource-grid" aria-busy="true"></div>
+          <div class="directory-empty" id="directoryEmpty" hidden><h3 data-i18n="emptySearch">Поки нічого не знайшли</h3><p data-i18n="emptySearchHint">Спробуйте коротший запит або інший напрям.</p><button class="quiet-button" type="button" id="resetFilters" data-i18n="resetFilters">Скинути фільтри</button></div>
+          <div class="catalog-footnote"><svg><use href="#i-lock"/></svg><p data-i18n="directoryPrivacy">Пошук працює у браузері. Доступність сторінки не гарантує надання послуги — умови підтверджує організація.</p></div>
+        </section>
+        <section class="app-view" id="viewPlan" hidden aria-labelledby="planHeading">
+          <div class="plan-heading"><div><span class="eyebrow" data-i18n="yourPace">У ВАШОМУ ТЕМПІ</span><h1 id="planHeading" tabindex="-1" data-i18n="myPlanTitle">Мій план підтримки</h1><p data-i18n="myPlanHint">Збирайте корисні контакти й рухайтеся по одному кроку.</p></div><button type="button" class="quiet-button" id="exportPlan" data-i18n="exportPlan">Завантажити план</button></div>
+          <div class="plan-overview"><div class="progress-dial" id="planDial" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Виконання плану / Plan completion"><strong id="planPercent">0%</strong></div><div><h2 data-i18n="yourProgress">Ваш поступ</h2><p id="planSummary" role="status"></p><span data-i18n="ownDates">Дати — ваші орієнтири, не юридичні строки.</span></div><button type="button" class="quiet-button" id="loadPlanDemo" data-i18n="tryPlanDemo">Спробувати демо-план</button></div>
+          <form id="taskForm" class="task-form"><label><span data-i18n="newTask">Ваш наступний крок</span><input id="taskTitle" maxlength="160" required autocomplete="off" data-i18n-placeholder="taskPlaceholder" placeholder="Наприклад, уточнити графік консультації"/></label><label><span data-i18n="targetDate">Орієнтовна дата</span><input id="taskDate" type="date"/></label><button class="button primary" type="submit" data-i18n="addTask">Додати крок</button></form>
+          <div id="planTasks" class="plan-tasks"></div>
+          <div class="saved-heading"><h2 data-i18n="savedResources">Збережені ресурси</h2><button class="quiet-button" type="button" data-view="discover" data-i18n="addResources">Додати з каталогу</button></div><div id="savedResources" class="resource-grid"></div>
+          <p class="local-state-note" data-i18n="planPrivacy">План існує лише в цій вкладці й зникне після перезавантаження. Завантажте його, щоб зберегти. Імена та номери документів тут не потрібні.</p>
+        </section>
+        <div class="app-view" id="viewWizard" hidden>
         <div class="workspace-top"><span data-i18n="workspaceLabel">ОСОБИСТИЙ НАВІГАТОР</span><span class="mode-badge" data-i18n="modeLabel">Прототип · без AI</span></div>
         <section class="demo-gallery" id="demoGallery" aria-labelledby="demoHeading">
           <div class="demo-heading"><div><span class="eyebrow" data-i18n="demoEyebrow">Спробуйте без особистих даних</span><h2 id="demoHeading" data-i18n="demoHeading">Три ситуації. Зрозумілий початок.</h2></div><span class="demo-label" data-i18n="fictional">Вигадані приклади</span></div>
@@ -142,6 +177,7 @@
             </div>
             <div class="result-metadata" id="resultMetadata"></div>
             <div class="result-toolbar"><button class="quiet-button" id="editCase" type="button" data-i18n="editCase">Редагувати відповіді</button><div><button class="quiet-button" id="downloadCase" type="button" data-i18n="download">Завантажити .txt</button><button class="quiet-button" id="printCase" type="button" data-i18n="print">Друк / PDF</button></div></div>
+            <button class="button primary" id="routeToPlan" type="button" data-i18n="routeToPlan">Додати кроки до мого плану</button>
             <section id="helpCatalog" class="help-catalog" aria-label="Каталог допомоги / Help catalog"></section>
             <div class="result-grid">
               <div class="action-plan card">
@@ -172,6 +208,7 @@
             <button class="button secondary restart" id="restartButton" type="button" hidden data-i18n="restart">Нове звернення</button>
           </footer>
         </form>
+        </div>
       </section>
     </main>
 
@@ -181,7 +218,10 @@
     <noscript>Для роботи анкети увімкніть JavaScript. Офіційна правнича допомога: <a href="https://legalaid.gov.ua/">legalaid.gov.ua</a>.</noscript>
     <script src="./case-data.js"></script>
     <script src="./catalog-core.js"></script>
+    <script src="./plan-core.js"></script>
+    <script src="./experience-copy.js"></script>
     <script src="./app.js"></script>
     <script src="./catalog-ui.js"></script>
+    <script src="./experience.js"></script>
   </body>
 </html>

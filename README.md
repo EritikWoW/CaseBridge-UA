@@ -1,6 +1,6 @@
 # CaseBridge UA
 
-CaseBridge UA is a privacy-first legal navigation prototype for people in Ukraine. It turns a plain-language description of a problem into a clear first-action route, a preparation checklist, verified public support contacts, and a copy-ready draft request.
+CaseBridge UA is a privacy-first support navigator for people in Ukraine. Explore official and public support resources without filling in a form, collect useful contacts, and turn them into a personal action plan. A separate legal-route tool prepares an initial consultation and a copy-ready draft request.
 
 Built for **GatewayHacks 2026** in the **Open Impact & Community** track.
 
@@ -8,7 +8,17 @@ Built for **GatewayHacks 2026** in the **Open Impact & Community** track.
 
 People in stressful situations often do not know the legal name of their problem, which institution is responsible, or what to prepare before asking for help. CaseBridge UA starts with the person's own words and bridges the gap between a lived problem and the existing public legal-aid system.
 
-## Prototype flow
+## Start without a questionnaire
+
+- **Find support:** a bilingual, searchable directory across rights and housing, social support, education, work, and wellbeing. Filter by area, IDP audience, or resources already added to your plan.
+- **My plan:** save resources, add a first action or a custom task, assign your own target date, check progress, undo task removal, and download a plain-text copy. A three-step fictional demo can be added without replacing existing work.
+- **Legal route:** the existing four-step preparation tool remains available; its bilingual steps can be added to the personal plan.
+
+The home screen includes an interactive support-area diagram, visibly layered day/night particles and light ribbons, a restrained night meteor, pointer-responsive cards, and progress transitions. Motion can be paused, respects the system reduced-motion setting, and stops when the scene is offscreen or the tab is hidden. Focus mode removes the decorative scene. These controls apply during this tab session; no preference is silently persisted.
+
+The plan is **in-memory only** and disappears on reload. The interface states this clearly and offers a local text download. Target dates do not schedule notifications and are not legal deadlines. This is a support navigator, not a live booking service, clinical tool, or automated eligibility decision.
+
+## Legal-route flow
 
 1. Describe the situation or start from a common topic.
 2. Add only routing context: region, deadline, relevant status, and safety risk.
@@ -58,7 +68,7 @@ These checks cover demo-data integrity, input validation, source references, pri
 
 ## Public help catalog
 
-The results match the selected topic and IDP status to reviewed source links from Free Legal Aid, Guide Diia, and UNHCR Ukraine. These are referrals and information pages, not eligibility decisions or verified nearby appointments. Region selection is used to explain the office-directory next step; no geographical distance is invented.
+The catalog includes nine reviewed referrals from Free Legal Aid, Guide Diia, UNHCR Ukraine, [Diia.Education](https://osvita.diia.gov.ua/), and [How Are You?](https://howareu.com/). The latter adds directories of online and community wellbeing support; the app does not provide treatment advice. Diia.Education links to learning series, career preparation, and digital hubs. These are referrals and information pages, not eligibility decisions or verified nearby appointments. Region selection in the legal tool explains the office-directory next step; no geographical distance is invented.
 
 `scripts/refresh_catalog.py` downloads public seed pages after checking robots rules. It extracts titles and candidate links, fingerprints source text, and updates availability observations. It does not follow discovered links, use private APIs, copy full articles, or send case data anywhere. Automated availability checks and editorial description dates are separate.
 

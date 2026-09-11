@@ -12,7 +12,7 @@ test('IDP housing case includes relevant partner and public services',()=>{
 });
 test('general employment case does not imply IDP eligibility',()=>{
  const matches=core.match(original,{topic:'work',statuses:[]},now);
- assert.ok(matches.length>0);assert.ok(matches.every(m=>m.entry.source_id==='bpd'));
+ assert.ok(matches.length>0);assert.ok(matches.every(m=>!m.entry.audiences.includes('idp')));
 });
 test('unapproved, expired and source-changed records cannot appear as current',()=>{
  const data=structuredClone(original);data.entries[0].approved=false;
