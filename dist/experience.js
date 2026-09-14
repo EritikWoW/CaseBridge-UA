@@ -1,5 +1,75 @@
 /* Loader + official resource-logo patch. The original application code lives in experience-core.js. */
 (() => {
+  const style = document.createElement('style');
+  style.textContent = `
+    .sidebar-intro{
+      position:relative;
+      overflow:hidden;
+      margin:0 0 24px;
+      padding:18px 18px 17px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:18px;
+      background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 12px 32px rgba(0,0,0,.10);
+    }
+    .sidebar-intro::before{
+      content:'';
+      position:absolute;
+      left:0;top:18px;bottom:18px;
+      width:3px;
+      border-radius:0 3px 3px 0;
+      background:linear-gradient(#ffd84d,#8fb9ff);
+      opacity:.95;
+    }
+    .sidebar-intro::after{
+      content:'';
+      position:absolute;
+      width:120px;height:120px;
+      right:-62px;top:-68px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(109,166,255,.18),transparent 68%);
+      pointer-events:none;
+    }
+    .sidebar-intro .eyebrow,
+    .sidebar-intro > span:first-child{
+      display:inline-flex;
+      align-items:center;
+      min-height:24px;
+      padding:0 9px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:999px;
+      background:rgba(4,20,37,.28);
+      color:#9fc5f2;
+      font-size:.64rem;
+      font-weight:800;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+    .sidebar-intro h2{
+      max-width:170px;
+      margin:15px 0 9px;
+      color:#f4f8fd;
+      font-size:1.12rem;
+      font-weight:720;
+      line-height:1.28;
+      letter-spacing:-.025em;
+      text-wrap:balance;
+    }
+    .sidebar-intro p{
+      max-width:170px;
+      margin:0;
+      color:#a9c0d8;
+      font-size:.79rem;
+      line-height:1.55;
+    }
+    @media (max-width:900px){
+      .sidebar-intro{padding:14px 15px;margin-bottom:16px;border-radius:14px;}
+      .sidebar-intro h2{max-width:none;font-size:1rem;margin:11px 0 6px;}
+      .sidebar-intro p{max-width:none;}
+    }
+  `;
+  document.head.append(style);
+
   const logoSpecs = {
     bpd: {type:'img', src:'https://legalaid.gov.ua/wp-content/themes/legalaidTheme/assets/img/icons/logo_2.svg'},
     diia: {type:'img', src:'https://guide.diia.gov.ua/static/img/logo-diia-black.svg'},
@@ -14,7 +84,6 @@
     const spec = logoSpecs[source];
     const emblem = card.querySelector('.resource-emblem');
     if (!spec || !emblem || emblem.dataset.logoApplied === '1') return;
-
     emblem.dataset.logoApplied = '1';
     emblem.textContent = '';
     emblem.style.display = 'grid';
@@ -22,42 +91,26 @@
     emblem.style.overflow = 'hidden';
     emblem.style.padding = '5px';
     emblem.style.background = '#fff';
-
     if (spec.type === 'img') {
       const img = document.createElement('img');
-      img.src = spec.src;
-      img.alt = '';
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.referrerPolicy = 'no-referrer';
+      img.src = spec.src; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
       img.style.cssText = 'display:block;width:100%;height:100%;object-fit:contain;';
-      emblem.append(img);
-      return;
+      emblem.append(img); return;
     }
-
     const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-    svg.setAttribute('viewBox','0 0 40 40');
-    svg.setAttribute('aria-hidden','true');
+    svg.setAttribute('viewBox','0 0 40 40'); svg.setAttribute('aria-hidden','true');
     svg.style.cssText = 'display:block;width:100%;height:100%;fill:#111;stroke:none;';
-    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
-    path.setAttribute('d', spec.path);
-    svg.append(path);
-    emblem.append(svg);
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path'); path.setAttribute('d', spec.path); svg.append(path); emblem.append(svg);
   }
 
-  function patchAll() {
-    document.querySelectorAll('.resource-card[data-source]').forEach(applyLogo);
-  }
-
+  function patchAll() { document.querySelectorAll('.resource-card[data-source]').forEach(applyLogo); }
   function installObserver() {
     patchAll();
     const observer = new MutationObserver(mutations => {
-      for (const mutation of mutations) {
-        for (const node of mutation.addedNodes) {
-          if (!(node instanceof Element)) continue;
-          if (node.matches?.('.resource-card[data-source]')) applyLogo(node);
-          node.querySelectorAll?.('.resource-card[data-source]').forEach(applyLogo);
-        }
+      for (const mutation of mutations) for (const node of mutation.addedNodes) {
+        if (!(node instanceof Element)) continue;
+        if (node.matches?.('.resource-card[data-source]')) applyLogo(node);
+        node.querySelectorAll?.('.resource-card[data-source]').forEach(applyLogo);
       }
     });
     observer.observe(document.body, {childList:true, subtree:true});
