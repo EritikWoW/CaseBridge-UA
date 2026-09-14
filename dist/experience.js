@@ -71,6 +71,11 @@
       pointer-events:none;
       opacity:.82;
     }
+    body.night select{
+      background-image:
+        linear-gradient(45deg,transparent 50%,#b8c8dc 50%),
+        linear-gradient(135deg,#b8c8dc 50%,transparent 50%) !important;
+    }
     @media (max-width:900px){
       .sidebar-intro{padding:14px 15px;margin-bottom:16px;border-radius:14px;}
       .sidebar-intro h2{max-width:none;font-size:1rem;margin:11px 0 6px;}
