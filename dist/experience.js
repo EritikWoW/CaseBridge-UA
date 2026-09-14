@@ -62,6 +62,15 @@
       font-size:.79rem;
       line-height:1.55;
     }
+    .constellation-layer{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:1;
+      pointer-events:none;
+      opacity:.82;
+    }
     @media (max-width:900px){
       .sidebar-intro{padding:14px 15px;margin-bottom:16px;border-radius:14px;}
       .sidebar-intro h2{max-width:none;font-size:1rem;margin:11px 0 6px;}
@@ -117,9 +126,86 @@
     document.addEventListener('casebridge:catalog', () => requestAnimationFrame(patchAll));
   }
 
+  function installConstellations() {
+    const scene = document.querySelector('#welcomeScene');
+    if (!scene || scene.querySelector('.constellation-layer')) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'constellation-layer';
+    scene.append(canvas);
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const constellations = [
+      {
+        name:'Ursa Major',
+        stars:[[.08,.28,1.9],[.15,.24,1.55],[.22,.27,1.45],[.29,.31,1.65],[.36,.26,1.8],[.42,.22,1.45],[.48,.18,1.75]],
+        lines:[[0,1],[1,2],[2,3],[3,0],[3,4],[4,5],[5,6]]
+      },
+      {
+        name:'Ursa Minor',
+        stars:[[.57,.16,1.35],[.61,.19,1.15],[.65,.22,1.2],[.69,.25,1.35],[.73,.22,1.2],[.77,.18,1.3],[.81,.15,1.8]],
+        lines:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]]
+      },
+      {
+        name:'Canes Venatici',
+        stars:[[.28,.56,1.7],[.36,.50,1.25],[.44,.54,1.85]],
+        lines:[[0,1],[1,2]]
+      },
+      {
+        name:'Cassiopeia',
+        stars:[[.64,.47,1.55],[.70,.41,1.85],[.76,.48,1.55],[.82,.40,1.75],[.88,.46,1.45]],
+        lines:[[0,1],[1,2],[2,3],[3,4]]
+      },
+      {
+        name:'Draco',
+        stars:[[.52,.72,1.3],[.58,.67,1.3],[.64,.69,1.2],[.69,.64,1.45],[.74,.68,1.2],[.79,.64,1.35],[.84,.68,1.2],[.88,.62,1.55]],
+        lines:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]
+      }
+    ];
+
+    const fieldStars = [
+      [.05,.13,.75],[.12,.10,.65],[.18,.15,.8],[.24,.11,.55],[.31,.13,.65],[.39,.12,.75],[.46,.10,.6],[.53,.11,.7],[.91,.10,.7],[.95,.20,.6],
+      [.05,.44,.6],[.13,.39,.55],[.21,.43,.7],[.49,.40,.55],[.56,.39,.65],[.92,.36,.55],[.96,.52,.75],[.06,.74,.7],[.15,.69,.55],[.23,.77,.65],
+      [.34,.72,.6],[.43,.76,.7],[.49,.65,.55],[.91,.78,.65],[.96,.86,.55],[.12,.88,.6],[.20,.84,.55],[.29,.90,.7],[.38,.85,.55],[.47,.90,.65]
+    ];
+
+    let w=1,h=1,dpr=1,raf=0,start=performance.now();
+    function resize(){
+      const r=scene.getBoundingClientRect();
+      dpr=Math.min(window.devicePixelRatio||1,2);
+      w=Math.max(1,r.width);h=Math.max(1,r.height);
+      canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+      canvas.style.width=w+'px';canvas.style.height=h+'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      draw();
+    }
+    function star(x,y,r,alpha){
+      ctx.beginPath();ctx.fillStyle=`rgba(224,239,255,${alpha})`;ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+      const g=ctx.createRadialGradient(x,y,0,x,y,r*4.5);g.addColorStop(0,`rgba(205,229,255,${alpha*.35})`);g.addColorStop(1,'rgba(205,229,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r*4.5,0,Math.PI*2);ctx.fill();
+    }
+    function draw(){
+      const t=(performance.now()-start)/1000;
+      ctx.clearRect(0,0,w,h);
+      ctx.lineWidth=.75;
+      ctx.strokeStyle='rgba(176,210,248,.18)';
+      for(const c of constellations){
+        for(const [a,b] of c.lines){
+          const p=c.stars[a],q=c.stars[b];
+          ctx.beginPath();ctx.moveTo(p[0]*w,p[1]*h);ctx.lineTo(q[0]*w,q[1]*h);ctx.stroke();
+        }
+        c.stars.forEach((s,i)=>star(s[0]*w,s[1]*h,s[2],.58+.25*Math.sin(t*.7+i*.9)**2));
+      }
+      fieldStars.forEach((s,i)=>star(s[0]*w,s[1]*h,s[2],.22+.16*Math.sin(t*.45+i)**2));
+    }
+    function tick(){draw();raf=requestAnimationFrame(tick);}
+    const ro=new ResizeObserver(resize);ro.observe(scene);resize();tick();
+    window.addEventListener('pagehide',()=>{cancelAnimationFrame(raf);ro.disconnect();},{once:true});
+  }
+
   const script = document.createElement('script');
   script.src = './experience-core.js';
-  script.onload = installObserver;
+  script.onload = () => { installObserver(); installConstellations(); };
   script.onerror = () => console.error('CaseBridge-UA: failed to load experience-core.js');
   document.head.append(script);
 })();
