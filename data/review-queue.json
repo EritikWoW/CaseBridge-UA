@@ -258,6 +258,13 @@
       "source_id": "howareu",
       "discovered_at": "2026-09-11T00:49:48.226710+00:00",
       "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/statti/z-pochatku-roku-lyudy-z-invalidnistyu-ponad-35-tysyach-raziv-zvernulysya-po-bezoplatnu-pravnychu-dopomogu/",
+      "title": "З початку року люди з інвалідністю понад 35 тисяч разів звернулися по безоплатну правничу допомогу",
+      "source_id": "bpd",
+      "discovered_at": "2026-09-25T11:59:22.906297+00:00",
+      "status": "pending_review"
     }
   ],
   "changes": [
@@ -266,7 +273,13 @@
       "observed_at": "2026-09-11T11:33:11.706947+00:00",
       "fingerprint": "a348888d7fbd209875f18c772a12700d839a70d896b80cacb10da5de191846b3",
       "status": "pending_review"
+    },
+    {
+      "source_id": "bpd",
+      "observed_at": "2026-09-25T11:59:22.906297+00:00",
+      "fingerprint": "ec0fc85fc9873a48bd8e170b1a24054baf23edc3ed3828c9075913bbd3b750cd",
+      "status": "pending_review"
     }
   ],
-  "updated_at": "2026-09-24T11:58:05.736124+00:00"
+  "updated_at": "2026-09-25T11:59:22.906297+00:00"
 }
