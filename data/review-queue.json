@@ -265,6 +265,13 @@
       "source_id": "bpd",
       "discovered_at": "2026-09-25T11:59:22.906297+00:00",
       "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/statti/bezoplatna-pravnycha-dopomoga-veteranam-vijny-kudy-zvertatysya-ta-yak-mozhut-dopomogty-yurysty/",
+      "title": "Безоплатна правнича допомога ветеранам війни: куди звертатися та як можуть допомогти юристи",
+      "source_id": "bpd",
+      "discovered_at": "2026-10-01T13:32:12.055260+00:00",
+      "status": "pending_review"
     }
   ],
   "changes": [
@@ -279,7 +286,13 @@
       "observed_at": "2026-09-25T11:59:22.906297+00:00",
       "fingerprint": "ec0fc85fc9873a48bd8e170b1a24054baf23edc3ed3828c9075913bbd3b750cd",
       "status": "pending_review"
+    },
+    {
+      "source_id": "bpd",
+      "observed_at": "2026-10-01T13:32:12.055260+00:00",
+      "fingerprint": "c1bd9e4e5a87ef6db0affc8631c0cbabd7fc8deea7720995d56e480e74c56734",
+      "status": "pending_review"
     }
   ],
-  "updated_at": "2026-09-30T12:47:15.498856+00:00"
+  "updated_at": "2026-10-01T13:32:12.055260+00:00"
 }
