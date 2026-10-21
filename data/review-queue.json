@@ -304,7 +304,13 @@
       "observed_at": "2026-10-09T13:28:39.041001+00:00",
       "fingerprint": "fde17d978f3e4cdd4731e0ef474ed8b679a51e4c326f90f55a139fe5b9389a62",
       "status": "pending_review"
+    },
+    {
+      "source_id": "bpd",
+      "observed_at": "2026-10-21T12:02:49.870377+00:00",
+      "fingerprint": "f550dc4bce81e4bab9b788d0ecfc9a640f2dbbb8fb4e73e6b67d3b265421fd02",
+      "status": "pending_review"
     }
   ],
-  "updated_at": "2026-10-20T11:51:14.021645+00:00"
+  "updated_at": "2026-10-21T12:02:49.870377+00:00"
 }
