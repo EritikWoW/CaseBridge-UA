@@ -272,6 +272,13 @@
       "source_id": "bpd",
       "discovered_at": "2026-10-01T13:32:12.055260+00:00",
       "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/statti/vidnovlennya-dokumentiv-oformlennya-soczvyplat-oskarzhennya-rishen-z-chym-vpo-zvertayutsya-po-pravnychu-dopomogu/",
+      "title": "Відновлення документів, оформлення соцвиплат, оскарження рішень: з чим ВПО звертаються по правничу допомогу",
+      "source_id": "bpd",
+      "discovered_at": "2026-11-14T13:40:09.284244+00:00",
+      "status": "pending_review"
     }
   ],
   "changes": [
@@ -316,7 +323,13 @@
       "observed_at": "2026-10-29T13:20:30.727236+00:00",
       "fingerprint": "06a7b2a4716d4b61ece57ee531b09d5d1d1242eb54bec799d5467cf0ec43e7dd",
       "status": "pending_review"
+    },
+    {
+      "source_id": "bpd",
+      "observed_at": "2026-11-14T13:40:09.284244+00:00",
+      "fingerprint": "e4a65b8b08124614f0f96813b299be6f92fbb5afb8aaa9bc0995925201820433",
+      "status": "pending_review"
     }
   ],
-  "updated_at": "2026-11-13T14:43:22.954721+00:00"
+  "updated_at": "2026-11-14T13:40:09.284244+00:00"
 }
