@@ -279,6 +279,13 @@
       "source_id": "bpd",
       "discovered_at": "2026-11-14T13:40:09.284244+00:00",
       "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/statti/ogolosheno-konkurs-z-vidboru-advokativ-yaki-zaluchayutsya-do-nadannya-bezoplatnoyi-vtorynnoyi-pravnychoyi-dopomogy-2/",
+      "title": "Оголошено конкурс з відбору адвокатів, які залучаються до надання безоплатної вторинної правничої допомоги",
+      "source_id": "bpd",
+      "discovered_at": "2026-11-20T15:37:16.130268+00:00",
+      "status": "pending_review"
     }
   ],
   "changes": [
@@ -341,7 +348,13 @@
       "observed_at": "2026-11-19T15:54:16.849174+00:00",
       "fingerprint": "fd94a83c9bfe6f0eed34acd8d298a4138f53ddf1a3a50700811373b65aa45229",
       "status": "pending_review"
+    },
+    {
+      "source_id": "bpd",
+      "observed_at": "2026-11-20T15:37:16.130268+00:00",
+      "fingerprint": "e18fbdbe07ac12ea62a9d7752e6d23e486e63ec7e598e4f3deebbe7ef9cf7a19",
+      "status": "pending_review"
     }
   ],
-  "updated_at": "2026-11-19T15:54:16.849174+00:00"
+  "updated_at": "2026-11-20T15:37:16.130268+00:00"
 }
