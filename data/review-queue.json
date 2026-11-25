@@ -286,6 +286,13 @@
       "source_id": "bpd",
       "discovered_at": "2026-11-20T15:37:16.130268+00:00",
       "status": "pending_review"
+    },
+    {
+      "url": "https://legalaid.gov.ua/bez-kategoriyi/yak-posylyty-zahyst-prav-lyudyny-v-gromadah-u-kyyevi-vidbuvsya-forum-systemy-nadannya-bpd/",
+      "title": "Як посилити захист прав людини в громадах: у Києві відбувся форум системи надання БПД",
+      "source_id": "bpd",
+      "discovered_at": "2026-11-25T17:25:47.185510+00:00",
+      "status": "pending_review"
     }
   ],
   "changes": [
@@ -360,7 +367,13 @@
       "observed_at": "2026-11-23T18:29:40.759439+00:00",
       "fingerprint": "363e007d88424c8e1cc5e2d40c6b2c912069345c18f39f8c21fec4625949b91a",
       "status": "pending_review"
+    },
+    {
+      "source_id": "bpd",
+      "observed_at": "2026-11-25T17:25:47.185510+00:00",
+      "fingerprint": "57d53130f70c7273fcb289e4230a9b21b81c6f6a18028f2b7672fe29dee6a866",
+      "status": "pending_review"
     }
   ],
-  "updated_at": "2026-11-24T17:57:17.253492+00:00"
+  "updated_at": "2026-11-25T17:25:47.185510+00:00"
 }
